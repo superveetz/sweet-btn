@@ -1,0 +1,46 @@
+
+            .animated-hover {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.mox-icon {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-touch-callout: text;
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    -o-user-select: text;
+    vertical-align: middle;
+    margin: 0 6px;
+}
+
+.mox-icon .mox-icon-wrap svg {
+    overflow: visible;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    z-index: 100;
+    display: inline-block;
+    position: absolute;
+    left:50%;
+    top:50%;
+}
+
+.mox-icon .mox-icon-wrap i {
+    z-index: 150;
+    display: inline-block;
+    position: absolute;
+    left:50%;
+    top:50%;
+
+    /*transform: translate(-50%, -50%);*/
+
+    -webkit-text-stroke-color: black;
+    -webkit-text-stroke-width: 0.3px;
+    -webkit-tap-highlight-color: transparent;
+}
