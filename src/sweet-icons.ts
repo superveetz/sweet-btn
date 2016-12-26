@@ -1,41 +1,54 @@
 declare var async: any;
+declare var jQuery: any;
 
 (function ( $ ) {
     class SweetButton {
-        private 'href' = '';
+        private 'hasChildElem' = false;
+
         private 'on-load' = '';
+
+        private 'scroll-in' = '';
+        private 'scroll-in-animation-duration' = '';
+        private 'scroll-in-animation-delay' = '';
+        private 'scroll-in-animation-iteration-count' = '';
+
+        private 'scroll-out' = '';
+        private 'scroll-out-animation-duration' = '';
+        private 'scroll-out-animation-delay' = '';
+        private 'scroll-out-animation-iteration-count' = '';
 
         private 'glyph-size' = '';
         private 'glyph-color' = '';
         private 'glyph-classes' = '';
+
         private 'glyph-click' = '';
         private 'glyph-click-animation-duration' = '';
         private 'glyph-click-animation-delay' = '';
+        private 'glyph-click-animation-iteration-count' = '';
+
         private 'glyph-mouse-enter' = '';
         private 'glyph-mouse-enter-animation-duration' = '';
         private 'glyph-mouse-enter-animation-delay' = '';
+        private 'glyph-mouse-enter-animation-iteration-count' = '';
+
         private 'glyph-mouse-leave' = '';
         private 'glyph-mouse-leave-animation-duration' = '';
         private 'glyph-mouse-leave-animation-delay' = '';
+        private 'glyph-mouse-leave-animation-iteration-count' = '';
 
         private 'element-events' = {
+            activeClassCount: {},
             isClickOccuring: false,
             isMouseEnterOccuring: false,
             isMouseLeaveOccuring: false,
+            isScrollInOccuring: false,
+            isScrollOutOccuring: false,
             click: [],
             'mouse-enter': [],
-            'mouse-leave': []
+            'mouse-leave': [],
+            'scroll-in': [],
+            'scroll-out': []
         };
-
-        // private 'default-shape' = {
-        //     // 'shape-1': '',
-        //     'shape-1-size': '',
-        //     'shape-1-background': '',
-        //     'shape-1-mouse-enter': '',
-        //     'shape-1-mouse-leave': '',
-        //     'shape-1-click': '',
-        //     'shape-1-zIndex': ''
-        // };
 
         private 'shape' = [{
             'shape-1': '',
@@ -46,14 +59,17 @@ declare var async: any;
             'shape-1-mouse-enter': '',
             'shape-1-mouse-enter-animation-duration': '',
             'shape-1-mouse-enter-animation-delay': '',
+            'shape-1-mouse-enter-animation-iteration-count': '',
 
             'shape-1-mouse-leave': '',
             'shape-1-mouse-leave-animation-duration': '',
             'shape-1-mouse-leave-animation-delay': '',
+            'shape-1-mouse-leave-animation-iteration-count': '',
 
             'shape-1-click': '',
             'shape-1-click-animation-duration': '',
-            'shape-1-click-animation-delay': ''
+            'shape-1-click-animation-delay': '',
+            'shape-1-click-animation-iteration-count': ''
         },
         {
             'shape-2': '',
@@ -63,12 +79,15 @@ declare var async: any;
             'shape-2-mouse-enter': '',
             'shape-2-mouse-enter-animation-duration': '',
             'shape-2-mouse-enter-animation-delay': '',
+            'shape-2-mouse-enter-animation-iteration-count': '',
             'shape-2-mouse-leave': '',
             'shape-2-mouse-leave-animation-duration': '',
             'shape-2-mouse-leave-animation-delay': '',
+            'shape-2-mouse-leave-animation-iteration-count': '',
             'shape-2-click': '',
             'shape-2-click-animation-duration': '',
-            'shape-2-click-animation-delay': ''
+            'shape-2-click-animation-delay': '',
+            'shape-2-click-animation-iteration-count': '',
         },
         {
             'shape-3': '',
@@ -78,12 +97,15 @@ declare var async: any;
             'shape-3-mouse-enter': '',
             'shape-3-mouse-enter-animation-duration': '',
             'shape-3-mouse-enter-animation-delay': '',
+            'shape-3-mouse-enter-animation-iteration-count': '',
             'shape-3-mouse-leave': '',
             'shape-3-mouse-leave-animation-duration': '',
             'shape-3-mouse-leave-animation-delay': '',
+            'shape-3-mouse-leave-animation-iteration-count': '',
             'shape-3-click': '',
             'shape-3-click-animation-duration': '',
-            'shape-3-click-animation-delay': ''
+            'shape-3-click-animation-delay': '',
+            'shape-3-click-animation-iteration-count': ''
         },
         {
             'shape-4': '',
@@ -93,12 +115,15 @@ declare var async: any;
             'shape-4-mouse-enter': '',
             'shape-4-mouse-enter-animation-duration': '',
             'shape-4-mouse-enter-animation-delay': '',
+            'shape-4-mouse-enter-animation-iteration-count': '',
             'shape-4-mouse-leave': '',
             'shape-4-mouse-leave-animation-duration': '',
             'shape-4-mouse-leave-animation-delay': '',
+            'shape-4-mouse-leave-animation-iteration-count': '',
             'shape-4-click': '',
             'shape-4-click-animation-duration': '',
-            'shape-4-click-animation-delay': ''
+            'shape-4-click-animation-delay': '',
+            'shape-4-click-animation-iteration-count': ''
         },
         {
             'shape-5': '',
@@ -108,38 +133,52 @@ declare var async: any;
             'shape-5-mouse-enter': '',
             'shape-5-mouse-enter-animation-duration': '',
             'shape-5-mouse-enter-animation-delay': '',
+            'shape-5-mouse-enter-animation-iteration-count': '',
             'shape-5-mouse-leave': '',
             'shape-5-mouse-leave-animation-duration': '',
             'shape-5-mouse-leave-animation-delay': '',
+            'shape-5-mouse-leave-animation-iteration-count': '',
             'shape-5-click': '',
             'shape-5-click-animation-duration': '',
-            'shape-5-click-animation-delay': ''
+            'shape-5-click-animation-delay': '',
+            'shape-4-click-animation-iteration-count': ''
         }];
 
-        public static shapeDictionary = {
-            'hexagon': SweetButton.CreateHexagon,
-            'square': SweetButton.CreateSquare,
-            'circle': SweetButton.CreateCircle
+        private shapeScale = {
+            'xs': {
+                width: 30,
+                height: 30
+            },
+            'sm': {
+                width: 45,
+                height: 45
+            },
+            'md': {
+                width: 60,
+                height: 60
+            },
+            'lg': {
+                width: 75,
+                height: 75
+            },
+            'xl': {
+                width: 90,
+                height: 90
+            }
         };
 
-        public static shapeScale = {
-            'xs': 30,
-            'sm': 45,
-            'md': 60,
-            'lg': 75,
-            'xl': 90
-        };
-
-        private static CreateHexagon (shapeConfig: Object, shapeLayerNum: number) : SVGElement {
+        private createHexagon = (shapeConfig: Object, shapeLayerNum: number) : SVGElement => {
             // element size/centering
-            const shapeSize:    string  = shapeConfig[`shape-${shapeLayerNum}-size`].length ? shapeConfig[`shape-${shapeLayerNum}-size`] : 'xs';
-            const shapeScale:   number  = SweetButton.shapeScale[shapeSize];
-            const shapeSpacing: number  = shapeScale / 10;
-            const shapeWidth:   number  = shapeScale + (shapeSpacing * 2);
-            const shapeHeight:  number  = shapeScale + (shapeSpacing * 2);
+            const shapeSize:        string  = shapeConfig[`shape-${shapeLayerNum}-size`].length ? shapeConfig[`shape-${shapeLayerNum}-size`] : 'xs';
+            const shapeScaleX:      number  = this.shapeScale[shapeSize]['width'];
+            const shapeSpacingX:    number  = shapeScaleX / 10;
+            const shapeScaleY:      number  = this.shapeScale[shapeSize]['height'];
+            const shapeSpacingY:    number  = shapeScaleY / 10;
+            const shapeWidth:       number  = shapeScaleX + (shapeSpacingX * 2);
+            const shapeHeight:      number  = shapeScaleY + (shapeSpacingY * 2);
             // need to use negative margins here
-            const shapeMarginLeft = `${((shapeScale / 2) + shapeSpacing) * -1}`;
-            const shapeMarginTop = `${((shapeScale / 2) + shapeSpacing) * -1}`;
+            const shapeMarginLeft = `${((shapeScaleX / 2) + shapeSpacingX) * -1}`;
+            const shapeMarginTop = `${((shapeScaleY / 2) + shapeSpacingY) * -1}`;
             // animation class names
             const clickAnimationName = shapeConfig[`shape-${shapeLayerNum}-click`];
             const mouseEnterAnimationName = shapeConfig[`shape-${shapeLayerNum}-mouse-enter`];
@@ -160,29 +199,29 @@ declare var async: any;
             // set svg attributes
             svgHexagon.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
             
-            svgHexagon.setAttribute('viewBox', `0 0 ${shapeScale/2} ${shapeScale/2}`);
+            svgHexagon.setAttribute('viewBox', `0 0 ${shapeScaleX/2} ${shapeScaleY/2}`);
             svgHexagon.setAttribute('fill', shapeConfig[`shape-${shapeLayerNum}-background`]);
             svgHexagon.setAttribute('stroke', 'black');
-            svgHexagon.setAttribute('stroke-width', `${shapeScale/100}px`);
+            svgHexagon.setAttribute('stroke-width', `${shapeScaleY/100}px`);
 
             // sizing/centering
             svgHexagon.setAttribute('z-index', shapeConfig[`shape-${shapeLayerNum}-zIndex`]);
-            svgHexagon.setAttribute('width', `${(shapeScale) + (shapeSpacing*2)}px`);
-            svgHexagon.setAttribute('height', `${(shapeScale) + (shapeSpacing*2)}px`);
+            svgHexagon.setAttribute('width', `${(shapeScaleX) + (shapeSpacingX*2)}px`);
+            svgHexagon.setAttribute('height', `${(shapeScaleY) + (shapeSpacingY*2)}px`);
 
             svgHexagon.setAttribute('style', `margin-left: ${shapeMarginLeft}px; margin-top: ${shapeMarginTop}px;`);
             
             // create the poly hexagon
             let polyHexagon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-            const ptMultiplier = shapeScale /100;
+            const ptMultiplierX = shapeScaleX /100;
+            const ptMultiplierY = shapeScaleY /100;
             const polyPts = [
-                `${47 * ptMultiplier}`,
-                `${37.5 * ptMultiplier} ${25 * ptMultiplier}`,
-                `${50 * ptMultiplier} ${3 * ptMultiplier}`,
-                `${37.5 * ptMultiplier} ${3 * ptMultiplier}`,
-                `${12.5 * ptMultiplier} ${25 * ptMultiplier}`,
-                `0 ${47 * ptMultiplier}`,
-                `${12.7 * ptMultiplier}`
+                `${46 * ptMultiplierX} ${37.5 * ptMultiplierY}`,
+                `${25 * ptMultiplierX} ${46 * ptMultiplierY}`,
+                `${4 * ptMultiplierX} ${37.5 * ptMultiplierY}`,
+                `${4 * ptMultiplierX} ${12.5 * ptMultiplierY}`,
+                `${25 * ptMultiplierX} ${4 * ptMultiplierY}`,
+                `${46 * ptMultiplierX} ${12.5 * ptMultiplierY}`
             ];
 
             polyHexagon.setAttributeNS(null, 'points', polyPts.join(', '));
@@ -193,16 +232,18 @@ declare var async: any;
             return svgHexagon;
         }
 
-        private static CreateCircle (shapeConfig: Object, shapeLayerNum: number) : SVGElement {
+        private createCircle = (shapeConfig: Object, shapeLayerNum: number) : SVGElement => {
             // element size/centering
-            const shapeSize:    string  = shapeConfig[`shape-${shapeLayerNum}-size`].length ? shapeConfig[`shape-${shapeLayerNum}-size`] : 'xs';
-            const shapeScale:   number  = SweetButton.shapeScale[shapeSize] * 1.14; // adjusting size of circles by 15%
-            const shapeSpacing: number  = shapeScale / 10;
-            const shapeWidth:   number  = shapeScale + (shapeSpacing * 2);
-            const shapeHeight:  number  = shapeScale + (shapeSpacing * 2);
+            const shapeSize:     string  = shapeConfig[`shape-${shapeLayerNum}-size`].length ? shapeConfig[`shape-${shapeLayerNum}-size`] : 'xs';
+            const shapeScaleX:   number  = this.shapeScale[shapeSize]['width'] * 1.14; // adjusting size of circles by 15%
+            const shapeSpacingX: number  = shapeScaleX / 10;
+            const shapeScaleY:   number  = this.shapeScale[shapeSize]['height'] * 1.14; // adjusting size of circles by 15%
+            const shapeSpacingY: number  = shapeScaleY / 10;
+            const shapeWidth:    number  = shapeScaleX + (shapeSpacingX * 2);
+            const shapeHeight:   number  = shapeScaleY + (shapeSpacingY * 2);
             // need to use negative margins here
-            const shapeMarginLeft: number = ((shapeScale / 2) + shapeSpacing) * -1;
-            const shapeMarginTop:  number = ((shapeScale / 2) + shapeSpacing) * -1;
+            const shapeMarginLeft: number = ((shapeScaleX / 2) + shapeSpacingX) * -1;
+            const shapeMarginTop:  number = ((shapeScaleY / 2) + shapeSpacingY) * -1;
             // animation class names
             const clickAnimationName = shapeConfig[`shape-${shapeLayerNum}-click`];
             const mouseEnterAnimationName = shapeConfig[`shape-${shapeLayerNum}-mouse-enter`];
@@ -222,25 +263,26 @@ declare var async: any;
             // set svg attributes
             svgCicle.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
             
-            svgCicle.setAttribute('viewBox', `0 0 ${shapeScale/2} ${shapeScale/2}`);
+            svgCicle.setAttribute('viewBox', `0 0 ${shapeScaleX/2} ${shapeScaleY/2}`);
             svgCicle.setAttribute('fill', shapeConfig[`shape-${shapeLayerNum}-background`]);
             svgCicle.setAttribute('stroke', 'black');
-            svgCicle.setAttribute('stroke-width', `${shapeScale/100}px`);
+            svgCicle.setAttribute('stroke-width', `${shapeScaleY/100}px`);
 
             // sizing/centering
             svgCicle.setAttribute('z-index', shapeConfig[`shape-${shapeLayerNum}-zIndex`]);
-            svgCicle.setAttribute('width', `${(shapeScale) + (shapeSpacing*2)}px`);
-            svgCicle.setAttribute('height', `${(shapeScale) + (shapeSpacing*2)}px`);
+            svgCicle.setAttribute('width', `${(shapeScaleX) + (shapeSpacingX*2)}px`);
+            svgCicle.setAttribute('height', `${(shapeScaleY) + (shapeSpacingY*2)}px`);
 
             svgCicle.setAttribute('style', `margin-left: ${shapeMarginLeft}px; margin-top: ${shapeMarginTop}px;`);
             
             // create the square rect
-            let polyCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            let polyCircle = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
             polyCircle.setAttribute('fill', shapeConfig[`shape-${shapeLayerNum}-background`]);
             const centeringMuliplier = 0.28; 
-            polyCircle.setAttribute('cx', `${(shapeScale*centeringMuliplier) - (shapeSpacing*centeringMuliplier)}`);
-            polyCircle.setAttribute('cy', `${(shapeScale*centeringMuliplier) - (shapeSpacing*centeringMuliplier)}`);
-            polyCircle.setAttribute('r', `${shapeScale / 5}`);
+            polyCircle.setAttribute('cx', `${(shapeScaleX*centeringMuliplier) - (shapeSpacingX*centeringMuliplier)}`);
+            polyCircle.setAttribute('cy', `${(shapeScaleY*centeringMuliplier) - (shapeSpacingY*centeringMuliplier)}`);
+            polyCircle.setAttribute('rx', `${shapeScaleX / 5}`);
+            polyCircle.setAttribute('ry', `${shapeScaleY / 5}`);
 
             // rect polygon to svg
             svgCicle.appendChild(polyCircle);
@@ -248,16 +290,18 @@ declare var async: any;
             return svgCicle;
         }
  
-        private static CreateSquare (shapeConfig: Object, shapeLayerNum: number) : SVGElement {
+        private createSquare = (shapeConfig: Object, shapeLayerNum: number) : SVGElement => {
             // element size/centering
             const shapeSize:    string  = shapeConfig[`shape-${shapeLayerNum}-size`].length ? shapeConfig[`shape-${shapeLayerNum}-size`] : 'xs';
-            const shapeScale:   number  = SweetButton.shapeScale[shapeSize];
-            const shapeSpacing: number  = shapeScale / 10;
-            const shapeWidth:   number  = shapeScale + (shapeSpacing * 2);
-            const shapeHeight:  number  = shapeScale + (shapeSpacing * 2);
+            const shapeScaleX:   number  = this.shapeScale[shapeSize]['width'];
+            const shapeSpacingX: number  = shapeScaleX / 10;
+            const shapeWidth:   number  = shapeScaleX + (shapeSpacingX * 2);
+            const shapeScaleY:   number  = this.shapeScale[shapeSize]['height'];
+            const shapeSpacingY: number  = shapeScaleY / 10;
+            const shapeHeight:  number  = shapeScaleY + (shapeSpacingY * 2);
             // need to use negative margins here
-            const shapeMarginLeft = `${((shapeScale / 2) + shapeSpacing) * -1}`;
-            const shapeMarginTop = `${((shapeScale / 2) + shapeSpacing) * -1}`;
+            const shapeMarginLeft = `${((shapeScaleX / 2) + shapeSpacingX) * -1}`;
+            const shapeMarginTop = `${((shapeScaleY / 2) + shapeSpacingY) * -1}`;
             // animation class names
             const clickAnimationName = shapeConfig[`shape-${shapeLayerNum}-click`];
             const mouseEnterAnimationName = shapeConfig[`shape-${shapeLayerNum}-mouse-enter`];
@@ -277,24 +321,24 @@ declare var async: any;
             // set svg attributes
             svgSquare.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
             
-            svgSquare.setAttribute('viewBox', `0 0 ${shapeScale/2} ${shapeScale/2}`);
+            svgSquare.setAttribute('viewBox', `0 0 ${shapeScaleX/2} ${shapeScaleY/2}`);
             svgSquare.setAttribute('fill', shapeConfig[`shape-${shapeLayerNum}-background`]);
             svgSquare.setAttribute('stroke', 'black');
-            svgSquare.setAttribute('stroke-width', `${shapeScale/100}px`);
+            svgSquare.setAttribute('stroke-width', `${shapeScaleY/100}px`);
 
             // sizing/centering
             svgSquare.setAttribute('z-index', shapeConfig[`shape-${shapeLayerNum}-zIndex`]);
-            svgSquare.setAttribute('width', `${(shapeScale) + (shapeSpacing*2)}px`);
-            svgSquare.setAttribute('height', `${(shapeScale) + (shapeSpacing*2)}px`);
+            svgSquare.setAttribute('width', `${(shapeScaleX) + (shapeSpacingX*2)}px`);
+            svgSquare.setAttribute('height', `${(shapeScaleY) + (shapeSpacingY*2)}px`);
 
             svgSquare.setAttribute('style', `margin-left: ${shapeMarginLeft}px; margin-top: ${shapeMarginTop}px;`);
             
             // create the square rect
             let polySquare = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-            polySquare.setAttribute('width', `${(shapeWidth/2) - (shapeSpacing*2)}`);
-            polySquare.setAttribute('height', `${(shapeHeight/2) - (shapeSpacing*2)}`);
-            polySquare.setAttribute('x', `${shapeSpacing/2}`);
-            polySquare.setAttribute('y', `${shapeSpacing/2}`);
+            polySquare.setAttribute('width', `${(shapeWidth/2) - (shapeSpacingX*2)}`);
+            polySquare.setAttribute('height', `${(shapeHeight/2) - (shapeSpacingY*2)}`);
+            polySquare.setAttribute('x', `${shapeSpacingX/2}`);
+            polySquare.setAttribute('y', `${shapeSpacingY/2}`);
 
             // rect polygon to svg
             svgSquare.appendChild(polySquare);
@@ -305,7 +349,6 @@ declare var async: any;
         private parseBtnAttributes = (btnElement: Element, btnPrefix: string) : void => {
             const dataPrefix = 'data-';
             const btnAttribs = btnElement.attributes;
-            // console.log('btnElement.attributes: ', btnElement.attributes);
             let keyName;
             let hasDataPrefix;
             let hasBtnPrefix;
@@ -315,7 +358,6 @@ declare var async: any;
             let indexOfShape;
 
             for(let keyIndex = 0; keyIndex < btnAttribs.length; keyIndex++) {
-                // console.log('key: ', keyIndex);
                 keyName = btnAttribs[keyIndex].name;
 
                 if (keyName == 'length') continue;
@@ -325,7 +367,7 @@ declare var async: any;
 
                 hasBtnPrefix = keyName.indexOf(btnPrefix);
                 if (hasBtnPrefix != -1) keyName = keyName.substring(btnPrefix.length+1, keyName.length);
-                // console.log('keyName: ', keyName);
+                
                 hasNumber = keyName.match(/\d+/g);
                 if (hasNumber) {
                     indexOfShape = parseFloat(hasNumber[0])-1;
@@ -334,12 +376,12 @@ declare var async: any;
                         this.shape[indexOfShape][keyName] = btnAttribs[keyIndex].value;
                         this.shape[indexOfShape][`shape-${indexOfShape+1}-zIndex`] = indexOfShape+1;
                     } else if (this.shape[indexOfShape][keyName] == undefined && hasBtnPrefix != -1) {
-                        console.error(keyName, 'is not supported, maximum number of layered shapes is 5.');
+                        console.debug('SweetButton: ', keyName, 'is not supported, the maximum number of layered shapes is 5.');
                     }
                 } else if (this[keyName] != undefined) {
                     this[keyName] = btnAttribs[keyIndex].value;
                 } else if (this[keyName] == undefined && hasBtnPrefix != -1) {
-                    console.error(keyName, 'is not supported, make sure that you are using the prefix:', btnPrefix, 'for all of your attributes.');
+                    console.debug('SweetButton: ', keyName, 'is not supported, please visit the documentation for a complete list of valid attributes.');
                 }
 
             }
@@ -348,19 +390,17 @@ declare var async: any;
         public static AddStaticStyles(btnPrefix: string = 'sweet-btn') : void {
             const btnStyleSheetId = `${btnPrefix}-styles`;
             const pageHead = document.head || document.getElementsByTagName('head')[0];
-            // const validStyleSheet = SweetButton.GetValidStyleSheet();
             let btnStyleSheet = document.createElement('style');
             btnStyleSheet.setAttribute('rel', 'stylesheet');
             btnStyleSheet.setAttribute('media', 'only screen');
             btnStyleSheet.setAttribute('id', btnStyleSheetId);
             btnStyleSheet.setAttribute('type', 'text/css');
 
-            let btnScale;
-            let btnSpacing;
             // element styles
             let btnCssText = `          .${btnPrefix} {
                 position: relative;
                 display: inline-block;
+                visibility: hidden;
                 cursor: pointer;
                 -webkit-touch-callout: text;
                 user-select: text;
@@ -368,7 +408,6 @@ declare var async: any;
                 -moz-user-select: text;
                 -ms-user-select: text;
                 -o-user-select: text;
-                margin: 2% 2% 0% 2%;
                 vertical-align: middle;
                 text-align: center;
             }
@@ -386,9 +425,11 @@ declare var async: any;
                 -webkit-animation-fill-mode: both;
                 animation-fill-mode: both;
             }
+
             .${btnPrefix} .${btnPrefix}-wrap svg rect,
             .${btnPrefix} .${btnPrefix}-wrap svg circle,
-            .${btnPrefix} .${btnPrefix}-wrap svg polygon {
+            .${btnPrefix} .${btnPrefix}-wrap svg polygon,
+            .${btnPrefix} .${btnPrefix}-wrap svg elipsis {
                 pointer-events: none;
             }
             
@@ -405,20 +446,22 @@ declare var async: any;
                 -webkit-tap-highlight-color: transparent;
 
             }
-            
-            `;
-            
-            for(let btnSize in SweetButton.shapeScale) {
-                btnScale = SweetButton.shapeScale[btnSize];
-                btnSpacing = btnScale / 10;
 
-                btnCssText +=   `.${btnPrefix}-${btnSize} { 
-                height: ${btnScale + (btnSpacing * 2)}px;
-                width: ${btnScale + (btnSpacing * 2)}px;
+            .${btnPrefix} .${btnPrefix}-inner-text {
+                    display: inline-block;
+                    z-index: 150;
+                    whiteSpace: pre;
+                    margin: 0;
+                    padding: 0;
+                    
+                    -webkit-touch-callout: text;
+                    user-select: text;
+                    -webkit-user-select: text;
+                    -moz-user-select: text;
+                    -ms-user-select: text;
+                    -o-user-select: text;
             }
-            
             `;
-            }
 
             btnStyleSheet.appendChild(document.createTextNode(btnCssText));
             
@@ -428,10 +471,73 @@ declare var async: any;
         }
 
         private createShapes = (divContainer: HTMLElement) : void => {
-            // console.log('divContainer: ', divContainer);
+            // parse elem for events here
+            const defEventAnimationClass:           string = '';
+            const defEventAnimationDuration:        number = 1000; // 1s
+            const defEventAnimationDelay:           number = 0; // no delay;
+            const defEventAnimationIterationCount:  number = 1;
+            let eventAnimationClass;
+            let eventAnimationDuration;
+            let eventAnimationDelay;
+            let eventAnimationIterationCount;
+            let activeClassCount;
+            
+            if (this['scroll-out']) {
+                let eventItem:                  Object = { activeClassCount: {} };
+                eventAnimationClass             = this[`scroll-out`];
+                eventAnimationDuration          = this[`scroll-out-animation-duration`];
+                eventAnimationDelay             = this[`scroll-out-animation-delay`];
+                eventAnimationIterationCount    = this[`scroll-out-animation-iteration-count`];
+
+                // set last scrolled to 0
+                eventItem['scrollOutLastPos'] = 0;
+
+                eventItem['selector']           = `scroll-out-${eventAnimationClass}`;
+
+                // disable infinite animations as they are a pain to handle (like do we really want to allow infinite animations on a mouse-out event?)
+                if (eventAnimationIterationCount == 'infinite') {
+                    eventAnimationIterationCount = undefined;
+                    console.debug('SweetButton: "infinite" is not supported as an animation-iteration-count property.');
+                }
+
+                eventItem[`animationIterationCount`]     = eventAnimationIterationCount    ? eventAnimationIterationCount      : defEventAnimationIterationCount;
+                eventItem['animationClass']              = eventAnimationClass             ? eventAnimationClass               : defEventAnimationClass;
+                eventItem['animationDuration']           = eventAnimationDuration          ? eventAnimationDuration            : defEventAnimationDuration;
+                eventItem[`animationDelay`]              = eventAnimationDelay             ? eventAnimationDelay               : defEventAnimationDelay;
+
+                this['element-events']['scroll-out'].push(eventItem);
+            }
+            // let's parse this for other events
+            if (this['scroll-in']) {
+                let eventItem:                  Object = { activeClassCount: {} };
+                eventAnimationClass             = this[`scroll-in`];
+                eventAnimationDuration          = this[`scroll-in-animation-duration`];
+                eventAnimationDelay             = this[`scroll-in-animation-delay`];
+                eventAnimationIterationCount    = this[`scroll-in-animation-iteration-count`];
+
+                // set last scrolled to 0
+                eventItem['scrollInLastPos'] = 0;
+
+                eventItem['selector']           = `scroll-in-${eventAnimationClass}`;
+
+                // disable infinite animations as they are a pain to handle (like do we really want to allow infinite animations on a mouse-out event?)
+                if (eventAnimationIterationCount == 'infinite') {
+                    eventAnimationIterationCount = undefined;
+                    console.debug('SweetButton: "infinite" is not supported as an animation-iteration-count property.');
+                }
+
+                eventItem[`animationIterationCount`]     = eventAnimationIterationCount    ? eventAnimationIterationCount      : defEventAnimationIterationCount;
+                eventItem['animationClass']              = eventAnimationClass             ? eventAnimationClass               : defEventAnimationClass;
+                eventItem['animationDuration']           = eventAnimationDuration          ? eventAnimationDuration            : defEventAnimationDuration;
+                eventItem[`animationDelay`]              = eventAnimationDelay             ? eventAnimationDelay               : defEventAnimationDelay;
+
+                this['element-events']['scroll-in'].push(eventItem);
+            }
+
             let shapeConfig;
             let shapeType;
             let shapeEvents;
+            // track shape events
             for(let i = 0, j = this.shape.length; i < j; i++) {
                 // goto next if no shape type
                 if (!this.shape[i][`shape-${i+1}`]) continue;
@@ -439,64 +545,89 @@ declare var async: any;
                 shapeType = shapeConfig[`shape-${i+1}`];
                 
                 // goto next if shape type is invalid
-                if (!SweetButton.shapeDictionary[shapeType]) {
-                    console.error(shapeType, 'is not supported, view the documentation for the completelist of shape types.');
+                if (!this.shapeDictionary[shapeType]) {
+                    console.debug('SweetButton: ', shapeType, 'is not supported, view the documentation for the completelist of shape types.');
                     continue;
                 }
-                // create layered btn shape
-                let svgShape = SweetButton.shapeDictionary[shapeType](shapeConfig, i+1);
 
-                // parse elem for events here
-                const defEventAnimationClass:        string = '';
-                const defEventAnimationDuration:     number = 1000; // 1s
-                const defEventAnimationDelay:        number = 0; // no delay;
-                let eventAnimationClass;
-                let eventAnimationDuration;
-                let eventAnimationDelay;
+                // create layered btn shape
+                let svgShape = this.shapeDictionary[shapeType](shapeConfig, i+1);
+                svgShape.className += ' animated';
 
                 if (shapeConfig[`shape-${i+1}-click`]) {
-                    let eventItem:                  Object = {};
-                    eventAnimationClass         = shapeConfig[`shape-${i+1}-click`];
-                    eventAnimationDuration      = shapeConfig[`shape-${i+1}-click-animation-duration`];
-                    eventAnimationDelay         = shapeConfig[`shape-${i+1}-click-animation-delay`];
+                    let eventItem:                  Object = { activeClassCount: {} };
+                    eventAnimationClass             = shapeConfig[`shape-${i+1}-click`];
+                    eventAnimationDuration          = shapeConfig[`shape-${i+1}-click-animation-duration`];
+                    eventAnimationDelay             = shapeConfig[`shape-${i+1}-click-animation-delay`];
+                    eventAnimationIterationCount    = shapeConfig[`shape-${i+1}-click-animation-iteration-count`];
 
                     eventItem['selector']           = `shape-${i+1}-click-${eventAnimationClass}`;
 
-                    eventItem['animationClass']     = eventAnimationClass       ? eventAnimationClass       : defEventAnimationClass;
-                    eventItem['animationDuration']  = eventAnimationDuration    ? eventAnimationDuration    : defEventAnimationDuration;
-                    eventItem[`animationDelay`]     = eventAnimationDelay       ? eventAnimationDelay       : defEventAnimationDelay;
+                    // disable infinite animations as they are a pain to handle (like do we really want to allow infinite animations on a mouse-out event?)
+                    if (eventAnimationIterationCount == 'infinite') {
+                        eventAnimationIterationCount = undefined;
+                        console.debug('SweetButton: "infinite" is not supported as an animation-iteration-count property.');
+                    }
+
+                    eventItem[`animationIterationCount`]     = eventAnimationIterationCount    ? eventAnimationIterationCount      : defEventAnimationIterationCount;
+                    eventItem['animationClass']              = eventAnimationClass             ? eventAnimationClass               : defEventAnimationClass;
+                    eventItem['animationDuration']           = eventAnimationDuration          ? eventAnimationDuration            : defEventAnimationDuration;
+                    eventItem[`animationDelay`]              = eventAnimationDelay             ? eventAnimationDelay               : defEventAnimationDelay;
 
                     this['element-events']['click'].push(eventItem);
                 }
 
                 if (shapeConfig[`shape-${i+1}-mouse-enter`]) {
-                    let eventItem:                  Object = {};
-                    eventAnimationClass         = shapeConfig[`shape-${i+1}-mouse-enter`];
-                    eventAnimationDuration      = shapeConfig[`shape-${i+1}-mouse-enter-animation-duration`];
-                    eventAnimationDelay         = shapeConfig[`shape-${i+1}-mouse-enter-animation-delay`];
-                    // console.log('eventAnimationDuration: ', eventAnimationDuration);
+                    let eventItem:                  Object = { activeClassCount: {} };
+                    eventAnimationClass             = shapeConfig[`shape-${i+1}-mouse-enter`];
+                    eventAnimationDuration          = shapeConfig[`shape-${i+1}-mouse-enter-animation-duration`];
+                    eventAnimationDelay             = shapeConfig[`shape-${i+1}-mouse-enter-animation-delay`];
+                    eventAnimationIterationCount    = shapeConfig[`shape-${i+1}-mouse-enter-animation-iteration-count`];
 
                     eventItem['selector']           = `shape-${i+1}-mouse-enter-${eventAnimationClass}`;
 
-                    eventItem['animationClass']     = eventAnimationClass       ? eventAnimationClass       : defEventAnimationClass;
-                    eventItem['animationDuration']  = eventAnimationDuration    ? eventAnimationDuration    : defEventAnimationDuration;
-                    eventItem[`animationDelay`]     = eventAnimationDelay       ? eventAnimationDelay       : defEventAnimationDelay;
+                    // disable infinite animations as they are a pain to handle (like do we really want to allow infinite animations on a mouse-out event?)
+                    if (eventAnimationIterationCount == 'infinite') {
+                        eventAnimationIterationCount = undefined;
+                        console.debug('SweetButton: "infinite" is not supported as an animation-iteration-count property.');
+                    }
+
+                    eventItem['animationClass']              = eventAnimationClass             ? eventAnimationClass               : defEventAnimationClass;
+                    eventItem['animationDuration']           = eventAnimationDuration          ? eventAnimationDuration            : defEventAnimationDuration;
+                    eventItem[`animationDelay`]              = eventAnimationDelay             ? eventAnimationDelay               : defEventAnimationDelay;
+                    eventItem[`animationIterationCount`]     = eventAnimationIterationCount    ? eventAnimationIterationCount      : defEventAnimationIterationCount;
+                    
+                    // keep track of number of events using this class
+                    activeClassCount = this['element-events']['activeClassCount'][eventItem['animationClass']];
+                    if (!activeClassCount) this['element-events']['activeClassCount'][eventItem['animationClass']] = 0;
 
                     this['element-events']['mouse-enter'].push(eventItem);
                 }
 
                 if (shapeConfig[`shape-${i+1}-mouse-leave`]) {
-                    let eventItem:                  Object = {};
-                    eventAnimationClass         = shapeConfig[`shape-${i+1}-mouse-leave`];
-                    eventAnimationDuration      = shapeConfig[`shape-${i+1}-mouse-leave-animation-duration`];
-                    eventAnimationDelay         = shapeConfig[`shape-${i+1}-mouse-leave-animation-delay`];
+                    let eventItem:                  Object = { activeClassCount: {} };
+                    eventAnimationClass             = shapeConfig[`shape-${i+1}-mouse-leave`];
+                    eventAnimationDuration          = shapeConfig[`shape-${i+1}-mouse-leave-animation-duration`];
+                    eventAnimationDelay             = shapeConfig[`shape-${i+1}-mouse-leave-animation-delay`];
+                    eventAnimationIterationCount    = shapeConfig[`shape-${i+1}-mouse-leave-animation-iteration-count`];
+
+                    // disable infinite animations as they are a pain to handle (like do we really want to allow infinite animations on a mouse-out event?)
+                    if (eventAnimationIterationCount == 'infinite') {
+                        eventAnimationIterationCount = undefined;
+                        console.debug('SweetButton: "infinite" is not supported as an animation-iteration-count property.');
+                    }
 
                     eventItem['selector']           = `shape-${i+1}-mouse-leave-${eventAnimationClass}`;
+                    
+                    eventItem[`animationIterationCount`]     = eventAnimationIterationCount    ? eventAnimationIterationCount      : defEventAnimationIterationCount;
+                    eventItem['animationClass']              = eventAnimationClass             ? eventAnimationClass               : defEventAnimationClass;
+                    eventItem['animationDuration']           = eventAnimationDuration          ? (eventAnimationDuration)            : (defEventAnimationDuration);
+                    eventItem[`animationDelay`]              = eventAnimationDelay             ? eventAnimationDelay               : defEventAnimationDelay;
 
-                    eventItem['animationClass']     = eventAnimationClass    ? eventAnimationClass      : defEventAnimationClass;
-                    eventItem['animationDuration']  = eventAnimationDuration ? eventAnimationDuration   : defEventAnimationDuration;
-                    eventItem[`animationDelay`]     = eventAnimationDelay    ? eventAnimationDelay      : defEventAnimationDelay;
-
+                    // keep track of number of events using this class
+                    activeClassCount = this['element-events']['activeClassCount'][eventItem['animationClass']];
+                    if (!activeClassCount) this['element-events']['activeClassCount'][eventItem['animationClass']] = 0;
+                    
                     this['element-events']['mouse-leave'].push(eventItem);
                 }
 
@@ -504,56 +635,105 @@ declare var async: any;
             }
         }
 
-        private createGlyphIcon = (divContainer: HTMLElement) : void => {
+        private createGlyphIcon = (divContainer: HTMLElement, btnPrefix: string) : void => {
             if (this['glyph-classes']) {
                 let iconGlyph = document.createElement('i');
 
                 // customize
                 iconGlyph.className = this['glyph-classes'];
-                const glyphSize = this['glyph-size'].length ? this['glyph-size'] : 'xs';
-                const glyphScale = SweetButton.shapeScale[glyphSize];
-                const glyphSpacing = glyphScale / 10;
+                const glyphSize     = this['glyph-size'].length ? this['glyph-size'] : 'xs';
+                const glyphScaleX   = this.shapeScale[glyphSize]['width'];
+                const glyphSpacingX = glyphScaleX / 10;
+                const glyphScaleY   = this.shapeScale[glyphSize]['height'];
+                const glyphSpacingY = glyphScaleY / 10;
 
-                // centering
-                let widthMultiplier = -7/19.25; // 75x - 7.5x = -24
-                let heightMultiplier = -7/26; // 75y - 7.5y = -20
-                iconGlyph.style.marginLeft = `${(widthMultiplier*glyphScale) - (widthMultiplier*glyphSpacing)}px`;
-                iconGlyph.style.marginTop = `${(heightMultiplier*glyphScale) - (heightMultiplier*glyphSpacing)}px`;
-
+                
                 // font
-                iconGlyph.style.fontSize = `${glyphScale/2}px`;
-                iconGlyph.style.lineHeight = `${glyphScale/2}px`;
+                iconGlyph.style.fontSize = `${glyphScaleY/2}px`;
+                iconGlyph.style.lineHeight = `${glyphScaleY/2}px`;
                 iconGlyph.style.color = this['glyph-color'];
 
+                // centering
+                if (this['hasChildElem']) {
+                    const fontSize = (glyphScaleY/2);
+                    const childWidth = this['childWidth'];
+                    const glyphWidth = this['shapeScale'][glyphSize]['width'];
+                    const extraPadding = 2;
+                    iconGlyph.style.marginTop = `-${fontSize/2}px`;
+                    iconGlyph.style.marginLeft = `-${fontSize/2 + fontSize/8 + childWidth/2 +extraPadding}px`;
+                } else {
+                    const fontSize = (glyphScaleY/2);
+                    iconGlyph.style.marginTop = `-${fontSize/2}px`;
+                    iconGlyph.style.marginLeft = `-${fontSize/2 + fontSize/8}px`;
+                }
+
                 // parse elem for events here
-                const defEventAnimationClass:        string = '';
-                const defEventAnimationDuration:     number = 1000; // 1s
-                const defEventAnimationDelay:        number = 0; // no delay;
+                const defEventAnimationClass:           string = '';
+                const defEventAnimationDuration:        number = 1000; // 1s
+                const defEventAnimationDelay:           number = 0; // no delay;
+                const defEventAnimationIterationCount:  number = 1;
                 let eventAnimationClass;
                 let eventAnimationDuration;
                 let eventAnimationDelay;
+                let eventAnimationIterationCount;
+                let activeClassCount;
 
                 if (this['glyph-click']) {
                     let eventItem:                  Object = {};
-                    eventAnimationClass         = this[`glyph-click`];
-                    eventAnimationDuration      = this[`glyph-click-animation-duration`];
-                    eventAnimationDelay         = this[`glyph-click-animation-delay`];
+                    eventAnimationClass             = this[`glyph-click`];
+                    eventAnimationDuration          = this[`glyph-click-animation-duration`];
+                    eventAnimationDelay             = this[`glyph-click-animation-delay`];
+                    eventAnimationIterationCount    = this[`glyph-click-animation-iteration-count`];
+
+                    if (eventAnimationIterationCount == "infinite") {
+                        console.debug('SweetButton: ', '"infinite" is not supported as an animation-iteration-count property.an animation-iteration-count');
+                        eventAnimationIterationCount = undefined;
+                    }
 
                     eventItem['selector']           = `glyph-click-${eventAnimationClass}`;
                     iconGlyph.className             += ` ${eventItem['selector']}`; 
 
-                    eventItem['animationClass']     = eventAnimationClass       ? eventAnimationClass       : defEventAnimationClass;
-                    eventItem['animationDuration']  = eventAnimationDuration    ? eventAnimationDuration    : defEventAnimationDuration;
-                    eventItem[`animationDelay`]     = eventAnimationDelay       ? eventAnimationDelay       : defEventAnimationDelay;
-                    // console.log('eventItem: ', eventItem);
+                    eventItem['animationClass']              = eventAnimationClass                ? eventAnimationClass       : defEventAnimationClass;
+                    eventItem['animationDuration']           = eventAnimationDuration             ? eventAnimationDuration    : defEventAnimationDuration;
+                    eventItem[`animationDelay`]              = eventAnimationDelay                ? eventAnimationDelay       : defEventAnimationDelay;
+                    eventItem[`animationIterationCount`]     = eventAnimationIterationCount       ? eventAnimationIterationCount       : defEventAnimationIterationCount;
+
+                    this['element-events']['click'].push(eventItem);
+                }
+
+                if (this['glyph-click'] && this['hasChildElem']) {
+                    let eventItem:                  Object = {};
+                    eventAnimationClass             = this[`glyph-click`];
+                    eventAnimationDuration          = this[`glyph-click-animation-duration`];
+                    eventAnimationDelay             = this[`glyph-click-animation-delay`];
+                    eventAnimationIterationCount    = this[`glyph-click-animation-iteration-count`];
+
+                    if (eventAnimationIterationCount == "infinite") {
+                        console.debug('SweetButton: ', '"infinite" is not supported as an animation-iteration-count property.an animation-iteration-count');
+                        eventAnimationIterationCount = undefined;
+                    }
+
+                    eventItem['selector']           = `${btnPrefix}-inner-text`;
+
+                    eventItem['animationClass']              = eventAnimationClass       ? eventAnimationClass       : defEventAnimationClass;
+                    eventItem['animationDuration']           = eventAnimationDuration    ? eventAnimationDuration    : defEventAnimationDuration;
+                    eventItem[`animationDelay`]              = eventAnimationDelay       ? eventAnimationDelay       : defEventAnimationDelay;
+                    eventItem[`animationIterationCount`]     = eventAnimationIterationCount       ? eventAnimationIterationCount       : defEventAnimationIterationCount;
+
                     this['element-events']['click'].push(eventItem);
                 }
 
                 if (this[`glyph-mouse-enter`]) {
                     let eventItem:                  Object = {};
-                    eventAnimationClass         = this[`glyph-mouse-enter`];
-                    eventAnimationDuration      = this[`glyph-mouse-enter-animation-duration`];
-                    eventAnimationDelay         = this[`glyph-mouse-enter-animation-delay`];
+                    eventAnimationClass             = this[`glyph-mouse-enter`];
+                    eventAnimationDuration          = this[`glyph-mouse-enter-animation-duration`];
+                    eventAnimationDelay             = this[`glyph-mouse-enter-animation-delay`];
+                    eventAnimationIterationCount    = this[`glyph-mouse-enter-animation-iteration-count`];
+
+                    if (eventAnimationIterationCount == "infinite") {
+                        console.debug('SweetButton: ', '"infinite" is not supported as an animation-iteration-count property.an animation-iteration-count');
+                        eventAnimationIterationCount = undefined;
+                    }
 
                     eventItem['selector']           = `glyph-mouse-enter-${eventAnimationClass}`;
                     iconGlyph.className             += ` ${eventItem['selector']}`;
@@ -561,7 +741,38 @@ declare var async: any;
                     eventItem['animationClass']     = eventAnimationClass       ? eventAnimationClass       : defEventAnimationClass;
                     eventItem['animationDuration']  = eventAnimationDuration    ? eventAnimationDuration    : defEventAnimationDuration;
                     eventItem[`animationDelay`]     = eventAnimationDelay       ? eventAnimationDelay       : defEventAnimationDelay;
+                    eventItem[`animationIterationCount`]     = eventAnimationIterationCount       ? eventAnimationIterationCount       : defEventAnimationIterationCount;
 
+                    // keep track of number of events using this class
+                    activeClassCount = this['element-events']['activeClassCount'][eventItem['animationClass']];
+                    if (!activeClassCount) this['element-events']['activeClassCount'][eventItem['animationClass']] = 0;
+
+                    this['element-events']['mouse-enter'].push(eventItem);
+                }
+
+                if (this['glyph-mouse-enter'] && this['hasChildElem']) {
+                    let eventItem:                  Object = {};
+                    eventAnimationClass         = this[`glyph-mouse-enter`];
+                    eventAnimationDuration      = this[`glyph-mouse-enter-animation-duration`];
+                    eventAnimationDelay         = this[`glyph-mouse-enter-animation-delay`];
+                    eventAnimationIterationCount    = this[`glyph-mouse-enter-animation-iteration-count`];
+
+                    if (eventAnimationIterationCount == "infinite") {
+                        console.debug('SweetButton: ', '"infinite" is not supported as an animation-iteration-count property.an animation-iteration-count');
+                        eventAnimationIterationCount = undefined;
+                    }
+
+                    eventItem['selector']           = `${btnPrefix}-inner-text`;
+
+                    eventItem['animationClass']     = eventAnimationClass       ? eventAnimationClass       : defEventAnimationClass;
+                    eventItem['animationDuration']  = eventAnimationDuration    ? eventAnimationDuration    : defEventAnimationDuration;
+                    eventItem[`animationDelay`]     = eventAnimationDelay       ? eventAnimationDelay       : defEventAnimationDelay;
+                    eventItem[`animationIterationCount`]     = eventAnimationIterationCount       ? eventAnimationIterationCount       : defEventAnimationIterationCount;
+
+                    // keep track of number of events using this class
+                    activeClassCount = this['element-events']['activeClassCount'][eventItem['animationClass']];
+                    if (!activeClassCount) this['element-events']['activeClassCount'][eventItem['animationClass']] = 0;
+                    
                     this['element-events']['mouse-enter'].push(eventItem);
                 }
 
@@ -570,6 +781,12 @@ declare var async: any;
                     eventAnimationClass         = this[`glyph-mouse-leave`];
                     eventAnimationDuration      = this[`glyph-mouse-leave-animation-duration`];
                     eventAnimationDelay         = this[`glyph-mouse-leave-animation-delay`];
+                    eventAnimationIterationCount    = this[`glyph-mouse-leave-animation-iteration-count`];
+
+                    if (eventAnimationIterationCount == "infinite") {
+                        console.debug('SweetButton: ', '"infinite" is not supported as an animation-iteration-count property.an animation-iteration-count');
+                        eventAnimationIterationCount = undefined;
+                    }
 
                     eventItem['selector']           = `glyph-mouse-leave-${eventAnimationClass}`;
                     iconGlyph.className             += ` ${eventItem['selector']}`;
@@ -577,7 +794,38 @@ declare var async: any;
                     eventItem['animationClass']     = eventAnimationClass    ? eventAnimationClass      : defEventAnimationClass;
                     eventItem['animationDuration']  = eventAnimationDuration ? eventAnimationDuration   : defEventAnimationDuration;
                     eventItem[`animationDelay`]     = eventAnimationDelay    ? eventAnimationDelay      : defEventAnimationDelay;
+                    eventItem[`animationIterationCount`]     = eventAnimationIterationCount       ? eventAnimationIterationCount       : defEventAnimationIterationCount;
 
+                    // keep track of number of events using this class
+                    activeClassCount = this['element-events']['activeClassCount'][eventItem['animationClass']];
+                    if (!activeClassCount) this['element-events']['activeClassCount'][eventItem['animationClass']] = 0;
+                    
+                    this['element-events']['mouse-leave'].push(eventItem);
+                }
+
+                if (this['glyph-mouse-leave'] && this['hasChildElem']) {
+                    let eventItem:                  Object = {};
+                    eventAnimationClass         = this[`glyph-mouse-leave`];
+                    eventAnimationDuration      = this[`glyph-mouse-leave-animation-duration`];
+                    eventAnimationDelay         = this[`glyph-mouse-leave-animation-delay`];
+                    eventAnimationIterationCount    = this[`glyph-mouse-leave-animation-iteration-count`];
+
+                    if (eventAnimationIterationCount == "infinite") {
+                        console.debug('SweetButton: ', '"infinite" is not supported as an animation-iteration-count property.an animation-iteration-count');
+                        eventAnimationIterationCount = undefined;
+                    }
+
+                    eventItem['selector']           = `${btnPrefix}-inner-text`;
+
+                    eventItem['animationClass']     = eventAnimationClass       ? eventAnimationClass       : defEventAnimationClass;
+                    eventItem['animationDuration']  = eventAnimationDuration    ? eventAnimationDuration    : defEventAnimationDuration;
+                    eventItem[`animationDelay`]     = eventAnimationDelay       ? eventAnimationDelay       : defEventAnimationDelay;
+                    eventItem[`animationIterationCount`]     = eventAnimationIterationCount       ? eventAnimationIterationCount       : defEventAnimationIterationCount;
+
+                    // keep track of number of events using this class
+                    activeClassCount = this['element-events']['activeClassCount'][eventItem['animationClass']];
+                    if (!activeClassCount) this['element-events']['activeClassCount'][eventItem['animationClass']] = 0;
+                    
                     this['element-events']['mouse-leave'].push(eventItem);
                 }
 
@@ -589,12 +837,13 @@ declare var async: any;
         private static HandleMouseEnterEvent = (divContainer: HTMLElement, elementEvents: Object) : EventListenerOrEventListenerObject => {
             
             return () => {
-                // console.log('mouse enter');
                 // don't start even if these are happening
-                if (elementEvents['isMouseEnterOccuring'] ||
-                    elementEvents['isClickOccuring']) return false;
-                
-                const cancelMouseLeave  = elementEvents['isMouseLeaveOccuring'];
+                if (elementEvents['isOnLoadOccuring'] ||
+                    elementEvents['isMouseEnterOccuring'] ||
+                    elementEvents['isMouseLeaveOccuring'] ||
+                    elementEvents['isClickOccuring'] ||
+                    elementEvents['isScrollInOccuring'] ||
+                    elementEvents['isScrollOutOccuring']) return false;
 
                 elementEvents['isMouseEnterOccuring'] = true;
 
@@ -605,15 +854,12 @@ declare var async: any;
                     async.waterfall([
                         (seriesCB) => {
                             selectedElement = $(divContainer).find(`.${mouseEnterEvent.selector}`);
-                            if (cancelMouseLeave) {
-                                SweetButton.RemoveEventAnimationClasses(divContainer, elementEvents, [
-                                    'mouse-leave'
-                                ]);
-                            }
                             // add css
                             selectedElement.css({
-                                'webkit-animation-duration': `${mouseEnterEvent.animationDuration}ms`,
-                                'animation-duration': `${mouseEnterEvent.animationDuration}ms`
+                                '-webkit-animation-duration': `${mouseEnterEvent.animationDuration}ms`,
+                                'animation-duration': `${mouseEnterEvent.animationDuration}ms`,
+                                '-webkit-animation-iteration-count': mouseEnterEvent.animationIterationCount,
+                                'animation-iteration-count': mouseEnterEvent.animationIterationCount
                             });
 
                             return seriesCB(null, selectedElement);
@@ -621,6 +867,7 @@ declare var async: any;
                         (selectedElement, seriesCB) => {
                             // apply animation delay and then add class
                             setTimeout(() => {
+
                                 selectedElement.addClass(`${mouseEnterEvent.animationClass}`);
 
                                 return seriesCB(null, selectedElement);
@@ -631,18 +878,11 @@ declare var async: any;
                             // remove classes  & css after animation has completed
                             setTimeout(() => {
 
-                                if (selectedElement.hasClass(`${mouseEnterEvent.animationClass}`)) {
-                                    selectedElement.removeClass(`${mouseEnterEvent.animationClass}`);
-
-                                    selectedElement.css({
-                                        'webkit-animation-duration': ``,
-                                        'animation-duration': ``
-                                    });
-                                }
+                                selectedElement.removeClass(`${mouseEnterEvent.animationClass}`);
 
                                 return seriesCB(null, selectedElement);
 
-                            }, mouseEnterEvent.animationDuration);
+                            }, mouseEnterEvent.animationIterationCount * mouseEnterEvent.animationDuration);
                         }
                     ], mouseEnterEventCB);
                 }, (err) => {
@@ -659,12 +899,13 @@ declare var async: any;
         private static HandleMouseLeaveEvent = (divContainer: HTMLElement, elementEvents: Object) : EventListenerOrEventListenerObject => {
             
             return () => {
-                // console.log('mouse leave');
                 // don't start even if these are happening
-                if (elementEvents['isMouseLeaveOccuring'] ||
-                    elementEvents['isClickOccuring']) return false;
-                
-                const cancelMouseEnter = elementEvents['isMouseEnterOccuring'];
+                if (elementEvents['isOnLoadOccuring'] ||
+                    elementEvents['isMouseLeaveOccuring'] ||
+                    elementEvents['isMouseEnterOccuring'] ||
+                    elementEvents['isClickOccuring'] ||
+                    elementEvents['isScrollInOccuring'] ||
+                    elementEvents['isScrollOutOccuring']) return false;
 
                 elementEvents['isMouseLeaveOccuring'] = true;
 
@@ -675,15 +916,12 @@ declare var async: any;
                     async.waterfall([
                         (seriesCB) => {
                             selectedElement = $(divContainer).find(`.${mouseLeave.selector}`);
-                            if (cancelMouseEnter) {
-                                SweetButton.RemoveEventAnimationClasses(divContainer, elementEvents, [
-                                    'mouse-enter'
-                                ]);
-                            }
                             // add css
                             selectedElement.css({
-                                'webkit-animation-duration': `${mouseLeave.animationDuration}ms`,
-                                'animation-duration': `${mouseLeave.animationDuration}ms`
+                                '-webkit-animation-duration': `${mouseLeave.animationDuration}ms`,
+                                'animation-duration': `${mouseLeave.animationDuration}ms`,
+                                '-webkit-animation-iteration-count': mouseLeave.animationIterationCount,
+                                'animation-iteration-count': mouseLeave.animationIterationCount
                             });
 
                             return seriesCB(null, selectedElement);
@@ -691,49 +929,232 @@ declare var async: any;
                         (selectedElement, seriesCB) => {
                             // apply animation delay and then add class
                             setTimeout(() => {
-                                // console.log('adding classes');
-                                selectedElement.addClass(`${mouseLeave.animationClass}`);
+                                // increment number of active events using this class
+                                elementEvents['activeClassCount'][`${mouseLeave.animationClass}`]++;
+
+                                if (!selectedElement.hasClass(`${mouseLeave.animationClass}`)) {
+                                    selectedElement.addClass(`${mouseLeave.animationClass}`);
+                                }
 
                                 return seriesCB(null, selectedElement);
 
                             }, mouseLeave.animationDelay);
                         },
                         (selectedElement, seriesCB) => {
-                            // remove classes  & css after animation has completed
-                            setTimeout(() => {
+                            // start the mouse in animation 100ms earlier than the class gets removed to avoid flicker
+                            async.parallel([
+                                (paraCB) => {
+                                    setTimeout(() => {
+                                        elementEvents['isMouseLeaveOccuring'] = false;
+                                        // trigger mouse enter after a mouse leave if not already occuring
+                                        SweetButton.HandleMouseEnterEvent(divContainer, elementEvents)();
 
-                                if (selectedElement.hasClass(`${mouseLeave.animationClass}`)) {
-                                    selectedElement.removeClass(`${mouseLeave.animationClass}`);
+                                        return paraCB();
+                                    }, mouseLeave.animationDuration * mouseLeave.animationIterationCount - 100);
+                                },
+                                (paraCB) => {
+                                    // remove classes  & css after animation has completed
+                                    setTimeout(() => {
 
-                                    selectedElement.css({
-                                        'webkit-animation-duration': ``,
-                                        'animation-duration': ``
-                                    });
+                                        // decrement the number of events using this class
+                                        elementEvents['activeClassCount'][`${mouseLeave.animationClass}`]--;
+
+                                        // only remove this class if there are no events needing it
+                                        if (elementEvents['activeClassCount'][`${mouseLeave.animationClass}`] == 0) {
+                                            selectedElement.removeClass(`${mouseLeave.animationClass}`);
+                                        }
+
+                                        return seriesCB(null, selectedElement);
+
+                                    }, mouseLeave.animationDuration * mouseLeave.animationIterationCount);
                                 }
-
-                                return seriesCB(null, selectedElement);
-
-                            }, mouseLeave.animationDuration);
+                            ], seriesCB);
+                            
                         }
                     ], mouseLeaveCB);
                 }, (err) => {
                     if (err) console.debug('err:', err);
-                    
-                    elementEvents['isMouseLeaveOccuring'] = false;
-                    // trigger mouse enter after a mouse leave if not already occuring
-                    // if (!elementEvents['isMouseEnterOccuring']) {
-                    //     console.log('trigger mouse enter');
-                    //     console.log('divContainer: ', divContainer);
-                    //     console.log('$(divContainer): ', $(divContainer));
-                    //     $(divContainer).trigger('mouseenter');
-                    //     $(divContainer).trigger('mousemove');
-                    // }
-                    
 
                 });
             }
         }
 
+        private static HandleScrollOutEvent = (divContainer: HTMLElement, elementEvents: Object) : EventListenerOrEventListenerObject => {
+            return () => {
+                const lastScrollAmount = elementEvents['scrollOutLastPos'];
+                const scrollAmount = $(window).scrollTop();
+                elementEvents['scrollOutLastPos'] =  scrollAmount;
+
+                if (elementEvents['isOnLoadOccuring'] ||
+                    elementEvents['isClickOccuring'] ||
+                    elementEvents['isMouseEnterOccuring'] ||
+                    elementEvents['isMouseLeaveOccuring'] ||
+                    elementEvents['isScrollInOccuring'] ||
+                    elementEvents['isScrollOutOccuring']) return false;
+
+                const amountToScroll = $(divContainer).offset();
+                const offset = $(divContainer).height();
+
+                if (scrollAmount < lastScrollAmount) {
+                    // element is in bottom portion of screen
+                    if (scrollAmount + window.innerHeight > amountToScroll.top + offset - (offset/3) && 
+                        scrollAmount + window.innerHeight < amountToScroll.top + offset + (offset/3)) {
+                        triggerScrollOutEvent();
+                    }
+                    
+                } else {
+                // scrolling up
+                    // element is in top portion of screen
+                    if (scrollAmount > amountToScroll.top - offset - (offset/3) && 
+                        scrollAmount < amountToScroll.top + (offset/3)) {
+                        triggerScrollOutEvent();
+                    }
+
+                }
+
+                function triggerScrollOutEvent() {
+                    elementEvents['isScrollOutOccuring'] = true;
+
+                    let selectedElement;
+
+                    async.each(elementEvents['scroll-out'], (scrollOutEvent, scrollOutEventCB) => {
+                        async.waterfall([
+                            (seriesCB) => {
+                                selectedElement = $(divContainer);
+                                
+                                selectedElement.css({
+                                    '-webkit-animation-duration': `${scrollOutEvent.animationDuration}ms`,
+                                    'animation-duration': `${scrollOutEvent.animationDuration}ms`,
+                                    '-webkit-animation-iteration-count': scrollOutEvent.animationIterationCount,
+                                    'animation-iteration-count': scrollOutEvent.animationIterationCount
+                                });
+
+                                return seriesCB(null, selectedElement);
+                            },
+                            (selectedElement, seriesCB) => {
+                                // apply animation delay and then add class
+                                setTimeout(() => {
+                                    selectedElement.addClass(`${scrollOutEvent.animationClass}`);
+
+                                    return seriesCB(null, selectedElement);
+
+                                }, scrollOutEvent.animationDelay);
+                            },
+                            (selectedElement, seriesCB) => {
+                                // start the mouse in animation 100ms earlier than the class gets removed to avoid flicker
+                                async.parallel([
+                                    (paraCB) => {
+                                        setTimeout(() => {
+                                            elementEvents['isScrollOutOccuring'] = false;
+                                            // trigger mouse enter after a mouse leave if not already occuring
+                                            SweetButton.HandleScrollInEvent(divContainer, elementEvents, true)();
+
+                                            return paraCB();
+                                        }, scrollOutEvent.animationDuration * scrollOutEvent.animationIterationCount - 100);
+                                    },
+                                    (paraCB) => {
+                                        // remove classes  & css after animation has completed
+                                        setTimeout(() => {
+                                            selectedElement.removeClass(`${scrollOutEvent.animationClass}`);
+
+                                            return seriesCB(null, selectedElement);
+
+                                        }, scrollOutEvent.animationDuration * scrollOutEvent.animationIterationCount);
+                                    }
+                                ]);
+                            }
+                        ], scrollOutEventCB);
+                    }, (err) => {
+                        if (err) console.debug('err:', err);
+                        
+                    });
+                }
+            }
+        }
+
+        private static HandleScrollInEvent = (divContainer: HTMLElement, elementEvents: Object, forceEvent: Boolean) : EventListenerOrEventListenerObject => {
+            return () => {
+                if (forceEvent) return triggerScrollInEvent();
+
+                const lastScrollAmount = elementEvents['scrollInLastPos'];
+                const scrollAmount = $(window).scrollTop();
+                elementEvents['scrollInLastPos'] =  scrollAmount;
+
+                if (elementEvents['isOnLoadOccuring'] ||
+                    elementEvents['isClickOccuring'] ||
+                    elementEvents['isMouseEnterOccuring'] ||
+                    elementEvents['isMouseLeaveOccuring'] ||
+                    elementEvents['isScrollInOccuring'] ||
+                    elementEvents['isScrollOutOccuring']) return false;
+
+                const amountToScroll = $(divContainer).offset();
+                const offset = $(divContainer).height();
+
+                // scrolling down
+                if (scrollAmount > lastScrollAmount) {
+                    // element is in bottom portion of screen
+                    if (scrollAmount + window.innerHeight > amountToScroll.top - (offset/3) && 
+                        scrollAmount + window.innerHeight < amountToScroll.top + (offset/3)) {
+                        triggerScrollInEvent();
+                    }
+                    
+                } else {
+                // scrolling up
+                    // element is in top portion of screen
+                    if (scrollAmount > amountToScroll.top + offset - (offset/3) && 
+                        scrollAmount < amountToScroll.top + offset + (offset/3)) {
+                            triggerScrollInEvent();
+                    }
+
+                }
+
+                function triggerScrollInEvent() {
+                    elementEvents['isScrollInOccuring'] = true;
+
+                    let selectedElement;
+
+                    async.each(elementEvents['scroll-in'], (scrollInEvent, scrollInEventCB) => {
+                        async.waterfall([
+                            (seriesCB) => {
+                                selectedElement = $(divContainer);
+
+                                selectedElement.css({
+                                    '-webkit-animation-duration': `${scrollInEvent.animationDuration}ms`,
+                                    'animation-duration': `${scrollInEvent.animationDuration}ms`,
+                                    '-webkit-animation-iteration-count': scrollInEvent.animationIterationCount,
+                                    'animation-iteration-count': scrollInEvent.animationIterationCount
+                                });
+
+                                return seriesCB(null, selectedElement);
+                            },
+                            (selectedElement, seriesCB) => {
+                                // apply animation delay and then add class
+                                setTimeout(() => {
+                                    selectedElement.addClass(`${scrollInEvent.animationClass}`);
+
+                                    return seriesCB(null, selectedElement);
+
+                                }, scrollInEvent.animationDelay);
+                            },
+                            (selectedElement, seriesCB) => {
+                                // remove classes  & css after animation has completed
+                                setTimeout(() => {
+                                    selectedElement.removeClass(`${scrollInEvent.animationClass}`);
+                                    
+                                    return seriesCB(null, selectedElement);
+
+                                }, scrollInEvent.animationDuration * scrollInEvent.animationIterationCount);
+                            }
+                        ], scrollInEventCB);
+                    }, (err) => {
+                        if (err) console.debug('err:', err);
+                        
+                        elementEvents['isScrollInOccuring'] = false;
+                        
+                    });
+                }
+            }
+        }
 
         private static HandleClickEvent = (divContainer: HTMLElement, elementEvents: Object) : EventListenerOrEventListenerObject => {
             
@@ -751,12 +1172,16 @@ declare var async: any;
                             selectedElement = $(divContainer).find(`.${clickEvent.selector}`);
                             SweetButton.RemoveEventAnimationClasses(divContainer, elementEvents, [
                                 'mouse-enter',
-                                'mouse-leave'
+                                'mouse-leave',
+                                'scroll-in',
+                                'scroll-out'
                             ]);
                             // add css
                             selectedElement.css({
-                                'webkit-animation-duration': `${clickEvent.animationDuration}ms`,
-                                'animation-duration': `${clickEvent.animationDuration}ms`
+                                '-webkit-animation-duration': `${clickEvent.animationDuration}ms`,
+                                'animation-duration': `${clickEvent.animationDuration}ms`,
+                                '-webkit-animation-iteration-count': clickEvent.animationIterationCount,
+                                'animation-iteration-count': clickEvent.animationIterationCount
                             });
 
                             return seriesCB(null, selectedElement);
@@ -764,7 +1189,6 @@ declare var async: any;
                         (selectedElement, seriesCB) => {
                             // apply animation delay and then add class
                             setTimeout(() => {
-
                                 selectedElement.addClass(`${clickEvent.animationClass}`);
 
                                 return seriesCB(null, selectedElement);
@@ -774,17 +1198,11 @@ declare var async: any;
                         (selectedElement, seriesCB) => {
                             // remove classes  & css after animation has completed
                             setTimeout(() => {
-
                                 selectedElement.removeClass(`${clickEvent.animationClass}`);
-
-                                selectedElement.css({
-                                    'webkit-animation-duration': ``,
-                                    'animation-duration': ``
-                                });
-
+                                
                                 return seriesCB(null, selectedElement);
 
-                            }, clickEvent.animationDuration);
+                            }, clickEvent.animationDuration * clickEvent.animationIterationCount);
                         }
                     ], clickEventCB);
                 }, (err) => {
@@ -809,7 +1227,7 @@ declare var async: any;
                         if (selectedElement.hasClass(event.animationClass)) {
                             selectedElement.removeClass(event.animationClass);
                             selectedElement.css({
-                                'webkit-animation-duration': ``,
+                                '-webkit-animation-duration': ``,
                                 'animation-duration': ``
                             });
                         }
@@ -832,7 +1250,7 @@ declare var async: any;
                         if (!selectedElement.hasClass(event.animationClass)) {
                             selectedElement.addClass(event.animationClass);
                             selectedElement.css({
-                                'webkit-animation-duration': `${event.animationDuration}ms`,
+                                '-webkit-animation-duration': `${event.animationDuration}ms`,
                                 'animation-duration': `${event.animationDuration}ms`
                             });
                         }
@@ -857,36 +1275,148 @@ declare var async: any;
                 divContainer.addEventListener('mouseleave', SweetButton.HandleMouseLeaveEvent(divContainer, this['element-events']));
             }
 
-            divContainer.addEventListener('load', () => {
-                console.log('loaded');
-            });
+            if (this['element-events']['scroll-in'].length) {
+                window.addEventListener('scroll', SweetButton.HandleScrollInEvent(divContainer, this['element-events'], false));
+            }
+
+            if (this['element-events']['scroll-out'].length) {
+                window.addEventListener('scroll', SweetButton.HandleScrollOutEvent(divContainer, this['element-events']));
+            }
             
         }
 
-        constructor(btnElement: HTMLElement, btnPrefix: string) {
-            // parse attribs for object config            
-            this.parseBtnAttributes(btnElement, btnPrefix);
+        private parseBtnInnerHtml = (btnElement: HTMLElement, btnPrefix: string): HTMLElement => {
+            const btnChildren = $(btnElement).children();
+            if (btnChildren.length == 0) return;
 
-            // build our div wrapper
+            this['hasChildElem'] = true;
+            const btnChild = btnChildren[0];
+            $(btnChild).addClass(`${btnPrefix}-inner-text`);
+            const childWidth = $(btnChild).width();
+            this['childWidth'] = childWidth;
+            const childHeight = $(btnChild).height();
+
+            // modify shapeScales to fit the new element
+            for(let key in this.shapeScale) {
+                this.shapeScale[key]['width']    += (childWidth * 1.5);
+                this.shapeScale[key]['height']   += (childHeight / 2);
+            }
+
+            if (this['glyph-classes']) {
+                const glyphSize     = this['glyph-size'].length ? this['glyph-size'] : 'xs';
+                const elemWidth     = this.shapeScale[glyphSize]['width'];
+                const extraPadding  = 2;
+                // adjust position
+                $(btnChild).css({
+                    position: 'absolute',
+                    top: "50%",
+                    left: "50%",
+                    marginTop: (childHeight / 2.25 * -1),
+                    marginLeft: ((childWidth / 2 - (elemWidth/8) - extraPadding) * -1)
+                });
+            } else {
+                // adjust position
+                $(btnChild).css({
+                    position: 'absolute',
+                    top: "50%",
+                    left: "50%",
+                    marginTop: (childHeight / 2.25 * -1),
+                    marginLeft: (childWidth / 2 * -1)
+                });
+            }
+
+            return btnChild;
+        }
+
+        private createDivContainer = (btnElement: HTMLElement, btnPrefix: string): HTMLElement => {
+            // parse element classes for a size
+            let btnScaleX;
+            let btnSpacingX;
+            let btnScaleY;
+            let btnSpacingY;
+            if ($(btnElement).hasClass(`${btnPrefix}-xl`)) {
+                btnScaleX = this.shapeScale['xl']['width'];
+                btnScaleY = this.shapeScale['xl']['height'];
+            } else if ($(btnElement).hasClass(`${btnPrefix}-lg`)) {
+                btnScaleX = this.shapeScale['lg']['width'];
+                btnScaleY = this.shapeScale['lg']['height'];
+            } else if ($(btnElement).hasClass(`${btnPrefix}-md`)) {
+                btnScaleX = this.shapeScale['md']['width'];
+                btnScaleY = this.shapeScale['md']['height'];
+            } else if ($(btnElement).hasClass(`${btnPrefix}-sm`)) {
+                btnScaleX = this.shapeScale['sm']['width'];
+                btnScaleY = this.shapeScale['sm']['height'];
+            } else if ($(btnElement).hasClass(`${btnPrefix}-xs`)) {
+                btnScaleX = this.shapeScale['xs']['width'];
+                btnScaleY = this.shapeScale['xs']['height'];
+            } else {
+                // default to xs
+                btnScaleX = this.shapeScale['xs']['width'];
+                btnScaleY = this.shapeScale['xs']['height'];
+            }
+
+            btnSpacingX = btnScaleX / 10;
+            btnSpacingY = btnScaleY / 10;
+
+            // set the on load classes
+            if (this['on-load']) {
+                $(btnElement).addClass(`animated ${this['on-load']}`);
+                this['element-events']['isLoadOccuring'] = true;
+
+                setTimeout(() => { 
+                    $(btnElement).removeClass(`${this['on-load']}`);
+                    $(btnElement).removeClass('animated');
+                    this['element-events']['isLoadOccuring'] = false;
+                }, 1000);
+            }
+
+            // set btn elem width/height now that child elems have been parsed
+            $(btnElement).css({
+                height: `${btnScaleY + (btnSpacingY * 2)}px`,
+                width: `${btnScaleX + (btnSpacingX * 2)}px`
+            });
+
             let divContainer = document.createElement('div');
             divContainer.setAttribute('class', `${btnPrefix}-wrap`);
             divContainer.style.height = "100%";
             divContainer.style.width = "100%";
 
-            if (this['on-load']) {
-                divContainer.className += ` ${this['on-load']}`;
-            }
+            return divContainer;
+        }
+
+        private shapeDictionary = {
+            'hexagon': this.createHexagon,
+            'square': this.createSquare,
+            'circle': this.createCircle
+        };
+
+        constructor(btnElement: HTMLElement, btnPrefix: string) {
+            // parse attribs for object config            
+            this.parseBtnAttributes(btnElement, btnPrefix);
+            // modify element scale based on inner text
+            let childElem = this.parseBtnInnerHtml(btnElement, btnPrefix);
+
+            // build our div wrapper
+            let divContainer = this.createDivContainer(btnElement, btnPrefix);
+            if (childElem) $(divContainer).append(childElem);
 
             // create the shape elements
             this.createShapes(divContainer);
 
             // create the glyph icon
-            this.createGlyphIcon(divContainer);
+            this.createGlyphIcon(divContainer, btnPrefix);
 
             // create the events
             this.createEvents(divContainer);
 
+            // append div container to btn element
             btnElement.insertAdjacentElement('beforeend', divContainer);
+
+            // make btn visible
+            $(btnElement).css({
+                visibility: 'visible'
+            });
+
         }
     }
     
@@ -901,6 +1431,7 @@ declare var async: any;
         // iterate through each button and manipulate
         return this.each(function () {
             let sweetBtn = new SweetButton(this, btnPrefix);
+            console.log('sweetBtn: ', sweetBtn);
         });
     }
 
