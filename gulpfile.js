@@ -12,7 +12,7 @@ gulp.task('compile', function () {
         out: 'output.js',
         module: 'system'
     }))
-    .pipe(concat('lib/js-library.js')) // can use other plugins
+    .pipe(concat('sweet-button.js')) // can use other plugins
     .pipe(uglify())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('release/'));
