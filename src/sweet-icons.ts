@@ -553,6 +553,7 @@ declare var jQuery: any;
                 // create layered btn shape
                 let svgShape = this.shapeDictionary[shapeType](shapeConfig, i+1);
                 svgShape.setAttribute('class', (svgShape.getAttribute('class') + ' animated'));
+                console.log('svg clases: ', svgShape.getAttribute('class'));
 
                 if (shapeConfig[`shape-${i+1}-click`]) {
                     let eventItem:                  Object = { activeClassCount: {} };
@@ -960,9 +961,11 @@ declare var jQuery: any;
                                         elementEvents['activeClassCount'][`${mouseLeave.animationClass}`]--;
 
                                         // only remove this class if there are no events needing it
-                                        if (elementEvents['activeClassCount'][`${mouseLeave.animationClass}`] == 0) {
-                                            selectedElement.removeClass(`${mouseLeave.animationClass}`);
-                                        }
+                                        // console.log(elementEvents['activeClassCount']);
+                                        // if (elementEvents['activeClassCount'][`${mouseLeave.animationClass}`] == 0) {
+                                        //     selectedElement.removeClass(`${mouseLeave.animationClass}`);
+                                        // }
+                                        selectedElement.removeClass(`${mouseLeave.animationClass}`);
 
                                         return seriesCB(null, selectedElement);
 
@@ -1365,7 +1368,7 @@ declare var jQuery: any;
 
                 setTimeout(() => { 
                     $(btnElement).removeClass(`${this['on-load']}`);
-                    $(btnElement).removeClass('animated');
+                    // $(btnElement).removeClass('animated');
                     this['element-events']['isLoadOccuring'] = false;
                 }, 1000);
             }
