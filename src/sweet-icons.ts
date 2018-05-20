@@ -552,7 +552,7 @@ declare var jQuery: any;
 
                 // create layered btn shape
                 let svgShape = this.shapeDictionary[shapeType](shapeConfig, i+1);
-                // svgShape.setAttribute('class', ) += ' animated';
+                svgShape.setAttribute('class', (svgShape.getAttribute('class') + ' animated'));
 
                 if (shapeConfig[`shape-${i+1}-click`]) {
                     let eventItem:                  Object = { activeClassCount: {} };

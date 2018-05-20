@@ -4,7 +4,7 @@ var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 
-gulp.task('compile', function () {
+gulp.task('default', function () {
     return gulp.src('src/**/*.ts')
     .pipe(sourcemaps.init()) // this means src maps will be generated
     .pipe(ts({
