@@ -22,8 +22,11 @@ A lightweight jQuery button plugin. Designed for developers, it's simple to use 
 ## Try It Out
 
 `git clone https://github.com/superveetz/sweet-btn.git`
+
 `cd sweet-button`
+
 `npm install`
+
 `npm run start`
 
 Add this just before your closing `head` tag:
