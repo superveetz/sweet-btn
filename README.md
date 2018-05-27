@@ -31,7 +31,7 @@ A lightweight jQuery button plugin that gives you options for how your buttons s
 
 ---
 
-** Installation
+## Installation
 
 This plugin relies on a couple packages which can be easily installed from npm:
 
