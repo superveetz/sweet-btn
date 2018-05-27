@@ -2,7 +2,7 @@
 
 ---
 
-A lightweight jQuery button plugin. Designed for developers, it's simple to use but very powerful.
+A lightweight jQuery button plugin that gives you options for how your buttons should look and feel. Designed for developers, it's simple to use but very powerful.
 
 ---
 
