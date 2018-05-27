@@ -7,6 +7,7 @@
 
         <script src="/node_modules/async/dist/async.min.js"></script>
         <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+        <script src='/node_modules/bootstrap/dist/js/bootstrap.min.js'></script>
         
         <script src="release/sweet-button.js"></script>
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -28,35 +29,6 @@
         
 
         <div class="container">
-                <a class="sweet-btn sweet-btn-xl animated" 
-                target=_blank 
-                href="https://www.linkedin.com/in/alex-di-vito-433334121"
-  
-                sweet-btn-glyph-classes='fa fa-fw fa-linkedin-square fa-inverse'
-                sweet-btn-glyph-size='xl'
-               
-                sweet-btn-shape-1='square'
-                sweet-btn-shape-1-size='xl'
-                sweet-btn-shape-1-background='dodgerblue'
-                sweet-btn-shape-1-mouse-enter='rotateIn'
-                sweet-btn-shape-1-mouse-leave='rotateOut'
-  
-                sweet-btn-shape-2='hexagon'
-                sweet-btn-shape-2-size='lg'
-                sweet-btn-shape-2-background='gold'
-                sweet-btn-shape-2-mouse-enter='rotateIn'
-                sweet-btn-shape-2-mouse-leave='rotateOut'
-  
-                sweet-btn-shape-3='circle'
-                sweet-btn-shape-3-size='md'
-                sweet-btn-shape-3-background='tomato'
-                sweet-btn-shape-3-mouse-enter='rotateIn'
-                sweet-btn-shape-3-mouse-leave='rotateOut'>
-              <!-- <span class="fa-stack fa-lg">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-              </span> -->
-            </a>
             <header class='text-center' style='margin-top: 60px; margin-bottom: 20px;'>
                 <b
                     class="sweet-btn sweet-btn-md animated"
@@ -97,7 +69,12 @@
                     <ul class='list-group' style='margin: 0px;'>
                         <li class='list-group-item'>
                             <p class='lead'>
-                                <b>Step 1.</b> Add <code>sweet-btn</code> and <code>sweet-btn-{size}</code> class names to any element:
+                                <b>Step 1.</b> Include the <code>/release/sweet-btn.js</code> JavaScript file in your project
+                            </p>
+                        </li>
+                        <li class='list-group-item'>
+                            <p class='lead'>
+                                <b>Step 2.</b> Add <code>sweet-btn</code> and <code>sweet-btn-{size}</code> class names to any element:
                             </p>
                             <ul class='list-inline'>
                                 <li class='lead'> - <code>{size}</code> options: </li>
@@ -109,19 +86,19 @@
                             </ul>
                             <p class='lead'>Ex. <code>&lt;i class='sweet-btn sweet-btn-xl'&gt;&lt;/i&gt;</code></p>
                         </li>
+
                         <li class='list-group-item'>
                             <p class='lead'>
-                                <b>Step 2.</b> Add <code>sweet-btn-{attribute-name}={value}</code> attributes to any element:
+                                <b>Step 3.</b> Add <code>sweet-btn-{attribute-name}={value}</code> attributes to any element:
                             </p>
                             <h4 class='lead'> - There are currently <u>104</u> different attributes that can be supported <u>simultaneously</u> 
-                                so we will divide the <code>{attribute-name}</code> options into <u>two categories</u>:</h4>
+                                so the <code>{attribute-name}</code> options documentation is divded into <u>two categories</u>:</h4>
                             
                             <ul class='list-inline text-center'>
                                 <li class='lead'>
                                     <a 
-                                        href="#"
+                                        href="#tabs"
                                         class='sweet-btn sweet-btn-lg'
-
 
                                         sweet-btn-shape-1='square'
                                         sweet-btn-shape-1-size='lg'
@@ -148,7 +125,7 @@
                                 <li class="lead">&amp;</li>
                                 <li class='lead'>
                                     <a 
-                                        href="#"
+                                        href="#tabs"
                                         class='sweet-btn sweet-btn-lg'
                                         sweet-btn-shape-1='hexagon'
                                         sweet-btn-shape-1-size='lg'
@@ -161,131 +138,1063 @@
                                 </li>
                             </ul>
                         </li>
+                        
+                        <li class='list-group-item'>
+                            <p class='lead'>
+                                <b>Step 4.</b> Enable the Sweet-Button.js plugin by adding a <code>&lt;script&gt;</code> tag at the bottom of your page: <br>
+                                <code>&lt;script&gt;</code><br>
+                                &nbsp;&nbsp;<code>$(function () {</code><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<code>$('.sweet-btn').sweetButton();</code><br>
+                                &nbsp;&nbsp;<code>});</code><br>
+                                <code>&lt;/script&gt;</code>
+                            </p>
                     </ul>
                 </div>
             </div>
 
-            <div class='panel panel-default'>
-                <div class="panel-heading text-center">
-                    <h1 class='panel-title'><strong>Appearance</strong></h1>
-                </div>
-                <div class="panel-body" style='padding: 0px;'>
+            <h2 class="page-header">Documentation</h2>
+
+            <ul class="nav nav-tabs nav-justified" id="tabs">
+                <li class="active"><a data-toggle="tab" data-target="#appearance" href="#appearance">Appearance</a></li>
+                <li><a data-toggle="tab" data-target="#events" href="#events">Events</a></li>
+                <li><a data-toggle="tab" data-target="#advanced" href="#advanced">Advanced Examples</a></li>
+            </ul>
             
-                    <ul class='list-group' style='margin: 0px;'>
-                        <li class='list-group-item'>
-                            <div class='row'>
-                                <div class='col-md-6'>
-                                    <p class='lead'>
-                                        <b>Shape Attribute:</b> <code>sweet-btn-shape-{#}={type}</code>
-                                    </p>
-                                    <ul class='list-inline'>
-                                        <li class='lead'> - <code>{#}</code> options: </li>
-                                        <li class='lead'><code>1</code></li>
-                                        <li class='lead'><code>2</code></li>
-                                        <li class='lead'><code>3</code></li>
-                                        <li class='lead'><code>4</code></li>
-                                        <li class='lead'><code>5</code></li>
-                                    </ul>
+            <div class="tab-content" style='margin-top: 10px;'>
+                <div id="appearance" class="tab-pane fade in active">
+                    <div class='panel panel-default'>
+                        <div class="panel-heading text-center">
+                            <h1 class='panel-title'><strong>Appearance</strong></h1>
+                        </div>
+                        <div class="panel-body" style='padding: 0px;'>
+                    
+                            <ul class='list-group' style='margin: 0px;'>
+                                <li class='list-group-item'>
+                                    <div class='row'>
+                                        <div class='col-md-6'>
+                                            <p class='lead'>
+                                                <b>Creating Shapes:</b> <br><code>sweet-btn-shape-{#}={type}</code>
+                                            </p>
+                                            <ul class='list-inline'>
+                                                <li class='lead'> - <code>{#}</code> options: </li>
+                                                <li class='lead'><code>1</code></li>
+                                                <li class='lead'><code>2</code></li>
+                                                <li class='lead'><code>3</code></li>
+                                                <li class='lead'><code>4</code></li>
+                                                <li class='lead'><code>5</code></li>
+                                            </ul>
 
-                                    <div class='alert alert-info'>
-                                        Note: The <code>{#}</code> indicates the z-index or the stacking order for multiple shapes.
+                                            <div class='alert alert-info'>
+                                                Note: The <code>{#}</code> indicates the z-index or the stacking order for multiple shapes.
+                                            </div>
+
+                                            <ul class='list-inline'>
+                                                <li class='lead'> - <code>{type}</code> options: </li>
+                                                <li class='lead'><code>hexagon</code></li>
+                                                <li class='lead'><code>square</code></li>
+                                                <li class='lead'><code>circle</code></li>
+                                            </ul>
+
+                                            <p class='lead'>
+                                                <b>Shape Size:</b> <br><code>sweet-btn-shape-{#}-size={size}</code>
+                                            </p>
+                                            <ul class='list-inline'>
+                                                <li class='lead'> - <code>{size}</code> options: </li>
+                                                <li class='lead'><code>xs</code></li>
+                                                <li class='lead'><code>sm</code></li>
+                                                <li class='lead'><code>md</code></li>
+                                                <li class='lead'><code>xl</code></li>
+                                            </ul>
+
+                                            <p class='lead'>
+                                                <b>Shape Color:</b> <br><code>sweet-btn-shape-{#}-background={color}</code>
+                                            </p>
+                                            <ul class='list-inline'>
+                                                <li class='lead'> - <code>{color}</code> options: </li>
+                                                <li class='lead'><code>any css color</code></li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class='lead'>
+                                                <b>Examples:</b>
+                                            </p>
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    <p class='lead'>
+                                                        <code>&lt;i class='sweet-btn sweet-btn-xl'</code><br> 
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-1='hexagon'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-1-background='blue'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-1-size='md'</code><br>
+                                                            <br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-2='square'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-2-background='red'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-2-size='sm'</code><br>
+                                                            <br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-3='circle'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-3-background='gold'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-3-size='xs'&gt;</code><br>
+                                                        <code>&lt;/i&gt;</code><br>
+                                                            
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-3 text-center">
+                                                    <a 
+                                                        href='#'
+                                                        class='sweet-btn sweet-btn-xl'
+                                                        sweet-btn-shape-1='hexagon'
+                                                        sweet-btn-shape-1-background='blue'
+                                                        sweet-btn-shape-1-size='md'
+
+                                                        sweet-btn-shape-2='square'
+                                                        sweet-btn-shape-2-background='red'
+                                                        sweet-btn-shape-2-size='sm'
+
+                                                        sweet-btn-shape-3='circle'
+                                                        sweet-btn-shape-3-background='gold'
+                                                        sweet-btn-shape-3-size='xs'>
+                                                    </a>
+
+                                                    <a 
+                                                        href='#'
+                                                        class='sweet-btn sweet-btn-xl'
+                                                        sweet-btn-shape-1='hexagon'
+                                                        sweet-btn-shape-1-background='dodgerblue'
+                                                        sweet-btn-shape-1-size='md'
+
+                                                        sweet-btn-shape-2='hexagon'
+                                                        sweet-btn-shape-2-background='gold'
+                                                        sweet-btn-shape-2-size='sm'
+
+                                                        sweet-btn-shape-3='hexagon'
+                                                        sweet-btn-shape-3-background='tomato'
+                                                        sweet-btn-shape-3-size='xs'>
+                                                    </a>
+
+                                                    <a 
+                                                        href='#'
+                                                        class='sweet-btn sweet-btn-xl'
+                                                        sweet-btn-shape-1='square'
+                                                        sweet-btn-shape-1-background='dodgerblue'
+                                                        sweet-btn-shape-1-size='lg'
+
+                                                        sweet-btn-shape-2='hexagon'
+                                                        sweet-btn-shape-2-background='gold'
+                                                        sweet-btn-shape-2-size='lg'
+
+                                                        sweet-btn-shape-3='square'
+                                                        sweet-btn-shape-3-background='tomato'
+                                                        sweet-btn-shape-3-size='md'>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-
-                                    <ul class='list-inline'>
-                                        <li class='lead'> - <code>{type}</code> options: </li>
-                                        <li class='lead'><code>hexagon</code></li>
-                                        <li class='lead'><code>square</code></li>
-                                        <li class='lead'><code>circle</code></li>
-                                    </ul>
-                                    <p class='lead'>Ex.
-                                        <code>&lt;i class='sweet-btn sweet-btn-xs'</code><br> 
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>sweet-btn-shape-4='hexagon'&gt;&lt;/i&gt;</code><br>
-                                    </p>
-                                </div>
-                                <div class="col-md-6">
-
-                                </div>
-                            </div>
-                        </li>
-                        <li class='list-group-item'>
-                            <p class='lead'>
-                                <b>Step 2.</b> Add <code>sweet-btn-{attribute-name}={value}</code> attributes to any element:
-                            </p>
-                            <h4 class='lead'> - There are currently <u>104</u> different attributes that can be supported <u>simultaneously</u> 
-                                so we will divide the <code>{attribute-name}</code> options into <u>two categories</u>:</h4>
-                            
-                            <ul class='list-inline text-center'>
-                                <li class='lead'>
-                                    <a 
-                                        href="#"
-                                        class='sweet-btn sweet-btn-lg'
-
-                                        sweet-btn-shape-1='square'
-                                        sweet-btn-shape-1-size='lg'
-                                        sweet-btn-shape-1-background='navy'
-                                        
-                                        sweet-btn-shape-2='circle'
-                                        sweet-btn-shape-2-size='lg'
-                                        sweet-btn-shape-2-background='darkred'
-                                        
-                                        sweet-btn-shape-3='hexagon'
-                                        sweet-btn-shape-3-size='md'
-                                        sweet-btn-shape-3-background='orange'
-                                        
-                                        sweet-btn-shape-4='hexagon'
-                                        sweet-btn-shape-4-size='lg'
-                                        sweet-btn-shape-4-background='orange'
-                                        
-                                        sweet-btn-shape-5='hexagon'
-                                        sweet-btn-shape-5-size='sm'
-                                        sweet-btn-shape-5-background='tomato'>
-                                            <b style='color: black;'>Appearance</b>
-                                        </a>
                                 </li>
-                                <li class="lead">&amp;</li>
-                                <li class='lead'>
-                                    <a 
-                                        href="#"
-                                        class='sweet-btn sweet-btn-lg'
-                                        sweet-btn-shape-1='hexagon'
-                                        sweet-btn-shape-1-size='lg'
-                                        sweet-btn-shape-1-background='tomato'
-                                        sweet-btn-shape-1-click='rubberBand'
-                                        sweet-btn-shape-1-mouse-enter='rotateIn'
-                                        sweet-btn-shape-1-mouse-leave='rotateOut'>
-                                            <b style='color: black;'>Events</b>
-                                        </a>
+
+                                <li class='list-group-item'>
+                                    <div class='row'>
+                                        <div class='col-md-6'>
+                                            <p class='lead'>
+                                                <b>Adding Icons:</b> <br><code>sweet-btn-glyph-classes={classes}</code>
+                                            </p>
+                                            <ul class='list-inline'>
+                                                <li class='lead'> - <code>{classes}</code> options: </li>
+                                                <li class='lead'><code>any font awesome class</code></li>
+                                            </ul>
+
+                                            <div class='alert alert-info'>
+                                                Note: The <code>{classes}</code> parameter should always contain the class <code>fa-fw</code> in order to obtain a fixed width icon that will center nicely.
+                                            </div>
+
+                                            <p class='lead'>
+                                                <b>Icon Size:</b> <br><code>sweet-btn-glyph-size={size}</code>
+                                            </p>
+                                            <ul class='list-inline'>
+                                                <li class='lead'> - <code>{size}</code> options: </li>
+                                                <li class='lead'><code>xs</code></li>
+                                                <li class='lead'><code>sm</code></li>
+                                                <li class='lead'><code>md</code></li>
+                                                <li class='lead'><code>xl</code></li>
+                                            </ul>
+
+                                            <p class='lead'>
+                                                <b>Icon Color:</b> <br><code>sweet-btn-glyph-color={color}</code>
+                                            </p>
+                                            <ul class='list-inline'>
+                                                <li class='lead'> - <code>{color}</code> options: </li>
+                                                <li class='lead'><code>any css color</code></li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class='lead'>
+                                                <b>Examples:</b>
+                                            </p>
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    <p class='lead'>
+                                                        <code>&lt;i class='sweet-btn sweet-btn-xl'</code><br> 
+                                                            &nbsp;&nbsp;<code>sweet-btn-glyph-classes='fa fa-fw fa-facebook-square'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-glyph-size='sm'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-glyph-color='skyblue'</code><br>
+                                                            <br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-1='hexagon'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-1-background='blue'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-1-size='md'</code><br>
+                                                            <br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-2='square'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-2-background='red'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-2-size='sm'</code><br>
+                                                            <br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-3='circle'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-3-background='gold'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-3-size='xs'&gt;</code><br>
+                                                        <code>&lt;/i&gt;</code><br>
+                                                            
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-3 text-center">
+                                                    <a 
+                                                        href='#'
+                                                        class='sweet-btn sweet-btn-xl'
+
+                                                        sweet-btn-glyph-classes='fa fa-fw fa-facebook-square'
+                                                        sweet-btn-glyph-size='sm'
+                                                        sweet-btn-glyph-color='skyblue'
+
+                                                        sweet-btn-shape-1='hexagon'
+                                                        sweet-btn-shape-1-background='blue'
+                                                        sweet-btn-shape-1-size='md'
+
+                                                        sweet-btn-shape-2='square'
+                                                        sweet-btn-shape-2-background='red'
+                                                        sweet-btn-shape-2-size='sm'
+
+                                                        sweet-btn-shape-3='circle'
+                                                        sweet-btn-shape-3-background='gold'
+                                                        sweet-btn-shape-3-size='xs'>
+                                                    </a>
+
+                                                    <a 
+                                                        href='#'
+                                                        class='sweet-btn sweet-btn-xl'
+
+                                                        sweet-btn-glyph-classes='fa fa-fw fa-rocket'
+                                                        sweet-btn-glyph-size='xs'
+                                                        sweet-btn-glyph-color='navy'
+
+                                                        sweet-btn-shape-1='hexagon'
+                                                        sweet-btn-shape-1-background='dodgerblue'
+                                                        sweet-btn-shape-1-size='md'
+
+                                                        sweet-btn-shape-2='hexagon'
+                                                        sweet-btn-shape-2-background='gold'
+                                                        sweet-btn-shape-2-size='sm'
+
+                                                        sweet-btn-shape-3='hexagon'
+                                                        sweet-btn-shape-3-background='tomato'
+                                                        sweet-btn-shape-3-size='xs'>
+                                                    </a>
+
+                                                    <a 
+                                                        href='#'
+                                                        class='sweet-btn sweet-btn-xl'
+                                                        
+                                                        sweet-btn-glyph-classes='fa fa-fw fa-github-square'
+                                                        sweet-btn-glyph-size='lg'
+                                                        sweet-btn-glyph-color='black'
+
+                                                        sweet-btn-shape-1='square'
+                                                        sweet-btn-shape-1-background='dodgerblue'
+                                                        sweet-btn-shape-1-size='lg'
+
+                                                        sweet-btn-shape-2='hexagon'
+                                                        sweet-btn-shape-2-background='gold'
+                                                        sweet-btn-shape-2-size='lg'
+
+                                                        sweet-btn-shape-3='square'
+                                                        sweet-btn-shape-3-background='tomato'
+                                                        sweet-btn-shape-3-size='md'>
+                                                    </a>
+
+                                                    <a 
+                                                        href='#'
+                                                        class='sweet-btn sweet-btn-xl'
+                                                        
+                                                        sweet-btn-glyph-classes='fa fa-fw fa-google'
+                                                        sweet-btn-glyph-size='xl'
+                                                        sweet-btn-glyph-color='black'
+
+                                                        sweet-btn-shape-1='circle'
+                                                        sweet-btn-shape-1-background='yellow'
+                                                        sweet-btn-shape-1-size='xl'
+
+                                                        sweet-btn-shape-2='hexagon'
+                                                        sweet-btn-shape-2-background='dodgerblue'
+                                                        sweet-btn-shape-2-size='lg'
+
+                                                        sweet-btn-shape-3='square'
+                                                        sweet-btn-shape-3-background='magenta'
+                                                        sweet-btn-shape-3-size='md'
+
+                                                        sweet-btn-shape-4='circle'
+                                                        sweet-btn-shape-4-background='white'
+                                                        sweet-btn-shape-4-size='sm'>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class='list-group-item'>
+                                    <div class='row'>
+                                        <div class='col-md-6'>
+                                            <p class='lead'>
+                                                <b>Adding Text:</b> 
+                                            </p>
+                                            <ul class='list-inline'>
+                                                <li class='lead'> - simply add any text or HTML inside the element containing the <code>sweet-btn</code> class</li>
+                                            </ul>
+                                            <p class='lead'>
+                                                <b>Example:</b> 
+                                            </p>
+                                            <ul class='list-inline'>
+                                                <li class='lead'>
+                                                    <code>&lt;i class='sweet-btn sweet-btn-xl'</code><br> 
+                                                    &nbsp;&nbsp;<code>sweet-btn-glyph-classes='fa fa-fw fa-facebook'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-glyph-size='sm'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-glyph-color='skyblue'</code><br>
+                                                    <br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-1='hexagon'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-1-background='blue'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-1-size='md'</code><br>
+                                                    <br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-2='square'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-2-background='red'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-2-size='sm'</code><br>
+                                                    <br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-3='circle'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-3-background='gold'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-3-size='xs'&gt;</code><br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;<code>&lt;h4 class='page-header'&gt;Lets Connect!&lt;/h4&gt;</code><br>
+                                                <code>&lt;/i&gt;</code><br>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-6 text-center">
+                                            <p class='lead'>
+                                                <b>Examples:</b> 
+                                            </p>
+                                            <a 
+                                                href='#'
+                                                class='sweet-btn sweet-btn-xl'
+
+                                                sweet-btn-glyph-classes='fa fa-fw fa-facebook-square'
+                                                sweet-btn-glyph-size='sm'
+                                                sweet-btn-glyph-color='skyblue'
+
+                                                sweet-btn-shape-1='hexagon'
+                                                sweet-btn-shape-1-background='blue'
+                                                sweet-btn-shape-1-size='md'
+
+                                                sweet-btn-shape-2='square'
+                                                sweet-btn-shape-2-background='red'
+                                                sweet-btn-shape-2-size='sm'
+
+                                                sweet-btn-shape-3='circle'
+                                                sweet-btn-shape-3-background='gold'
+                                                sweet-btn-shape-3-size='xs'>
+                                                    <h4 class='page-header'>Let's Connect!</h4>
+                                            </a>
+                                            
+                                            
+                                            <a 
+                                                href='#'
+                                                class='sweet-btn sweet-btn-xl'
+
+                                                sweet-btn-glyph-classes='fa fa-fw fa-instagram'
+                                                sweet-btn-glyph-size='sm'
+                                                sweet-btn-glyph-color='skyblue'
+
+                                                sweet-btn-shape-1='square'
+                                                sweet-btn-shape-1-background='dodgerblue'
+                                                sweet-btn-shape-1-size='md'
+
+                                                sweet-btn-shape-2='circle'
+                                                sweet-btn-shape-2-background='gold'
+                                                sweet-btn-shape-2-size='sm'
+
+                                                sweet-btn-shape-3='hexagon'
+                                                sweet-btn-shape-3-background='tomato'
+                                                sweet-btn-shape-3-size='xs'>
+                                                    <h4 class='page-header'>Follow Me!</h4>
+                                            </a>
+
+                                            <a 
+                                                href='#'
+                                                class='sweet-btn sweet-btn-xl'
+
+                                                sweet-btn-glyph-classes='fa fa-fw fa-stack-overflow'
+                                                sweet-btn-glyph-size='md'
+                                                sweet-btn-glyph-color='white'
+
+                                                sweet-btn-shape-1='hexagon'
+                                                sweet-btn-shape-1-background='dodgerblue'
+                                                sweet-btn-shape-1-size='xl'
+
+                                                sweet-btn-shape-2='hexagon'
+                                                sweet-btn-shape-2-background='gold'
+                                                sweet-btn-shape-2-size='lg'
+
+                                                sweet-btn-shape-3='hexagon'
+                                                sweet-btn-shape-3-background='tomato'
+                                                sweet-btn-shape-3-size='md'
+                                                
+                                                sweet-btn-shape-4='circle'
+                                                sweet-btn-shape-4-background='grey'
+                                                sweet-btn-shape-4-size='sm'>
+                                                    <h4 class='page-header' style='color: white;'>Check Me Out!</h4>
+                                            </a>
+
+                                            <a 
+                                                href='#'
+                                                class='sweet-btn sweet-btn-xl'
+
+                                                sweet-btn-shape-1='square'
+                                                sweet-btn-shape-1-background='dodgerblue'
+                                                sweet-btn-shape-1-size='xl'
+
+                                                sweet-btn-shape-2='square'
+                                                sweet-btn-shape-2-background='gold'
+                                                sweet-btn-shape-2-size='lg'
+
+                                                sweet-btn-shape-3='square'
+                                                sweet-btn-shape-3-background='tomato'
+                                                sweet-btn-shape-3-size='md'
+                                                
+                                                sweet-btn-shape-4='circle'
+                                                sweet-btn-shape-4-background='grey'
+                                                sweet-btn-shape-4-size='sm'>
+                                                    <div class='text-center' style='color: white;'>No Glyph Required</div>
+                                            </a>
+
+                                            <a 
+                                                href='#'
+                                                class='sweet-btn sweet-btn-md'
+
+                                                sweet-btn-shape-1='circle'
+                                                sweet-btn-shape-1-background='dodgerblue'
+                                                sweet-btn-shape-1-size='md'
+
+                                                sweet-btn-shape-2='circle'
+                                                sweet-btn-shape-2-background='gold'
+                                                sweet-btn-shape-2-size='sm'
+
+                                                sweet-btn-shape-3='circle'
+                                                sweet-btn-shape-3-background='tomato'
+                                                sweet-btn-shape-3-size='xs'>
+                                                    <div class='text-center' style='color: white;'>No Glyph Required</div>
+                                            </a>
+
+                                        </div>
+                                    </div>
                                 </li>
                             </ul>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="events" class="tab-pane fade in">
+                    <div class='panel panel-default'>
+                        <div class="panel-heading text-center">
+                            <h1 class='panel-title'><strong>Events</strong></h1>
+                        </div>
+                        <div class="panel-body" style='padding: 0px;'>
+                    
+                            <ul class='list-group' style='margin: 0px;'>
+                                <li class='list-group-item'>
+                                    <div class='row'>
+                                        <div class='col-md-6'>
+                                            <p class='lead'>
+                                                <b>Shape Events:</b> <br><code>sweet-btn-shape-{#}-{event-type}={classes}</code>
+                                            </p>
+                                            <ul class='list-inline'>
+                                                <li class='lead'> - <code>{#}</code> options: </li>
+                                                <li class='lead'><code>1</code></li>
+                                                <li class='lead'><code>2</code></li>
+                                                <li class='lead'><code>3</code></li>
+                                                <li class='lead'><code>4</code></li>
+                                                <li class='lead'><code>5</code></li>
+                                            </ul>
+
+                                            <ul class='list-inline'>
+                                                <li class='lead'> - <code>{event-type}</code> options: </li>
+                                                <li class='lead'><code>click</code></li>
+                                                <li class='lead'><code>mouse-enter</code></li>
+                                                <li class='lead'><code>mouse-leave</code></li>
+                                            </ul>
+
+                                            <ul class='list-inline'>
+                                                <li class='lead'> - <code>{classes}</code> options: </li>
+                                                <li class='lead'><code>any css class</code></li>
+                                            </ul>
+                                            
+                                            <div class='alert alert-info'>
+                                                Note: It is highly recommended to use Daniel Eden's <code><a href="https://github.com/daneden/animate.css.git" target=_blank>animate.css</a></code> library for animation classes.
+                                            </div>
+
+                                            <p class='lead'>
+                                                <b>Icon Events:</b> <br><code>sweet-btn-glyph-{event-type}={classes}</code>
+                                            </p>
+
+                                            <p class="lead">
+                                                <div class='btn-group'>
+                                                        
+                                                    <a 
+                                                        href='#'
+                                                        class='sweet-btn sweet-btn-xl'
+                                                        sweet-btn-shape-1='hexagon'
+                                                        sweet-btn-shape-1-background='blue'
+                                                        sweet-btn-shape-1-size='md'
+                                                        sweet-btn-shape-1-mouse-enter='wobble'
+                                                        
+                                                        sweet-btn-shape-2='square'
+                                                        sweet-btn-shape-2-background='red'
+                                                        sweet-btn-shape-2-size='sm'
+                                                        sweet-btn-shape-2-mouse-enter='rotateOut'
+
+                                                        sweet-btn-shape-3='circle'
+                                                        sweet-btn-shape-3-background='gold'
+                                                        sweet-btn-shape-3-size='xs'
+                                                        sweet-btn-shape-3-mouse-enter='shake'>
+                                                    </a>
+
+                                                    <a 
+                                                        href='#'
+                                                        class='sweet-btn sweet-btn-xl'
+                                                        sweet-btn-shape-1='hexagon'
+                                                        sweet-btn-shape-1-background='dodgerblue'
+                                                        sweet-btn-shape-1-size='md'
+                                                        sweet-btn-shape-1-mouse-enter='rotateInDownLeft'
+
+                                                        sweet-btn-shape-2='hexagon'
+                                                        sweet-btn-shape-2-background='gold'
+                                                        sweet-btn-shape-2-size='sm'
+                                                        sweet-btn-shape-2-mouse-enter='rotateInUpRight'
+
+                                                        sweet-btn-shape-3='hexagon'
+                                                        sweet-btn-shape-3-background='tomato'
+                                                        sweet-btn-shape-3-size='xs'
+                                                        sweet-btn-shape-3-mouse-enter='rotateInDownRight'>
+                                                    </a>
+
+                                                    <a 
+                                                        href='#'
+                                                        class='sweet-btn sweet-btn-xl'
+                                                        sweet-btn-shape-1='square'
+                                                        sweet-btn-shape-1-background='dodgerblue'
+                                                        sweet-btn-shape-1-size='lg'
+                                                        sweet-btn-shape-1-mouse-enter='rollIn'
+
+                                                        sweet-btn-shape-2='hexagon'
+                                                        sweet-btn-shape-2-background='gold'
+                                                        sweet-btn-shape-2-size='lg'
+                                                        sweet-btn-shape-2-mouse-enter='jackInTheBox'
+
+                                                        sweet-btn-shape-3='square'
+                                                        sweet-btn-shape-3-background='tomato'
+                                                        sweet-btn-shape-3-size='md'
+                                                        sweet-btn-shape-3-mouse-enter='lightSpeedIn'>
+                                                    </a>
+
+                                                </div>
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class='lead'>
+                                                <b>Examples:</b>
+                                            </p>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p class='lead'>
+                                                        <code>&lt;i class='sweet-btn sweet-btn-xl'</code><br> 
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-1='hexagon'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-1-background='blue'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-1-size='md'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-1-mouse-enter='wobble'</code><br>
+                                                            <br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-2='square'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-2-background='red'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-2-size='sm'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-2-mouse-enter='shake'</code><br>
+                                                            <br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-3='circle'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-3-background='gold'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-3-size='xs'&gt;</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-3-mouse-enter='bounce'</code><br>
+                                                        <code>&lt;/i&gt;</code><br>
+                                                            
+                                                    </p>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class='list-group-item'>
+                                    <div class='row'>
+                                        <div class='col-md-6'>
+                                            
+                                            <p class='lead'>
+                                                <b>Animation Duration:</b> <br><code>sweet-btn-shape-{#}-{event-type}-animation-duration={integer}</code>
+                                            </p>
+
+                                            <div class='alert alert-info'>
+                                                Note: The <code>{integer}</code> parameter is in number of milliseconds, ie. <code>1000</code> for 1 second.
+                                            </div>
+
+                                            <ul class='list-inline'>
+                                                <li class='lead'> - <code>{event-type}</code> options: </li>
+                                                <li class='lead'><code>click</code></li>
+                                                <li class='lead'><code>mouse-enter</code></li>
+                                                <li class='lead'><code>mouse-leave</code></li>
+                                            </ul>
+
+                                            <p class='lead'>
+                                                <b>Animation Delay:</b> <br><code>sweet-btn-shape-{#}-{event-type}-animation-delay={integer}</code>
+                                            </p>
+                                            
+                                            <p class='lead'>
+                                                <b>Animation Iteration Count:</b> <br><code>sweet-btn-shape-{#}-{event-type}-animation-iteration-count={integer}</code>
+                                            </p>
+
+                                            <p class="lead">
+                                                    <div class='btn-group'>
+                                                            
+                                                        <a 
+                                                            href='#'
+                                                            class='sweet-btn sweet-btn-xl'
+                                                            sweet-btn-shape-1='hexagon'
+                                                            sweet-btn-shape-1-background='blue'
+                                                            sweet-btn-shape-1-size='md'
+                                                            sweet-btn-shape-1-mouse-enter='wobble'
+                                                            sweet-btn-shape-1-mouse-enter-animation-duration="1000"
+                                                            
+                                                            sweet-btn-shape-2='square'
+                                                            sweet-btn-shape-2-background='red'
+                                                            sweet-btn-shape-2-size='sm'
+                                                            sweet-btn-shape-2-mouse-enter='rotateOut'
+                                                            sweet-btn-shape-2-mouse-enter-animation-duration="2000"
+
+                                                            sweet-btn-shape-3='circle'
+                                                            sweet-btn-shape-3-background='gold'
+                                                            sweet-btn-shape-3-size='xs'
+                                                            sweet-btn-shape-3-mouse-enter='shake'
+                                                            sweet-btn-shape-3-mouse-enter-animation-duration="3000">
+                                                        </a>
+    
+                                                        <a 
+                                                            href='#'
+                                                            class='sweet-btn sweet-btn-xl'
+                                                            sweet-btn-shape-1='hexagon'
+                                                            sweet-btn-shape-1-background='dodgerblue'
+                                                            sweet-btn-shape-1-size='md'
+                                                            sweet-btn-shape-1-mouse-enter='rotateInDownLeft'
+                                                            sweet-btn-shape-1-mouse-enter-animation-duration="3000"
+    
+                                                            sweet-btn-shape-2='hexagon'
+                                                            sweet-btn-shape-2-background='gold'
+                                                            sweet-btn-shape-2-size='sm'
+                                                            sweet-btn-shape-2-mouse-enter='rotateInUpRight'
+                                                            sweet-btn-shape-2-mouse-enter-animation-duration="2000"
+    
+                                                            sweet-btn-shape-3='hexagon'
+                                                            sweet-btn-shape-3-background='tomato'
+                                                            sweet-btn-shape-3-size='xs'
+                                                            sweet-btn-shape-3-mouse-enter='rotateInDownRight'
+                                                            sweet-btn-shape-3-mouse-enter-animation-duration="1000">
+                                                        </a>
+    
+                                                        <a 
+                                                            href='#'
+                                                            class='sweet-btn sweet-btn-xl'
+                                                            sweet-btn-shape-1='square'
+                                                            sweet-btn-shape-1-background='dodgerblue'
+                                                            sweet-btn-shape-1-size='lg'
+                                                            sweet-btn-shape-1-mouse-enter='rollIn'
+                                                            sweet-btn-shape-1-mouse-enter-animation-duration="3000"
+                                                            sweet-btn-shape-1--mouse-enter-animation-delay="0"
+
+                                                            sweet-btn-shape-2='hexagon'
+                                                            sweet-btn-shape-2-background='gold'
+                                                            sweet-btn-shape-2-size='lg'
+                                                            sweet-btn-shape-2-mouse-enter='jackInTheBox'
+                                                            sweet-btn-shape-2-mouse-enter-animation-duration="2000"
+                                                            sweet-btn-shape-2-mouse-enter-animation-delay="1000"
+    
+                                                            sweet-btn-shape-3='square'
+                                                            sweet-btn-shape-3-background='tomato'
+                                                            sweet-btn-shape-3-size='md'
+                                                            sweet-btn-shape-3-mouse-enter='lightSpeedIn'
+                                                            sweet-btn-shape-3-mouse-enter-animation-duration="1000"
+                                                            sweet-btn-shape-3-mouse-enter-animation-delay="2000">
+                                                        </a>
+    
+                                                    </div>
+                                                </p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class='lead'>
+                                                <b>Examples:</b>
+                                            </p>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p class='lead'>
+                                                        <code>&lt;i class='sweet-btn sweet-btn-xl'</code><br> 
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-1='hexagon'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-1-background='blue'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-1-size='md'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-1-mouse-enter='wobble'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-1-mouse-enter-animation-delay='0'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-1-mouse-enter-animation-duration='3000'</code><br>
+                                                            <br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-2='square'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-2-background='red'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-2-size='sm'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-2-mouse-enter='shake'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-2-mouse-enter-animation-delay='1000'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-2-mouse-enter-animation-duration='2000'</code><br>
+                                                            <br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-3='circle'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-3-background='gold'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-3-size='xs'&gt;</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-3-mouse-enter='bounce'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-3-mouse-enter-animation-delay='2000'</code><br>
+                                                            &nbsp;&nbsp;<code>sweet-btn-shape-3-mouse-enter-animation-duration='1000'</code><br>
+                                                        <code>&lt;/i&gt;</code><br>
+                                                            
+                                                    </p>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="advanced" class="tab-pane fade in">
+                    <div class='panel panel-default'>
+                        <div class="panel-heading text-center">
+                            <h1 class='panel-title'><strong>Advanced</strong></h1>
+                        </div>
+                        <div class="panel-body" style='padding: 0px;'>
+                    
+                            <ul class='list-group' style='margin: 0px;'>
+                                <li class='list-group-item'>
+                                    <div class='row'>
+                                        <div class='col-md-12'>
+                                            <p class='lead'>
+                                                <b>Staggered Animations:</b>
+                                            </p>
+
+                                            <div class="btn-group text-center">
+                                                <a class="sweet-btn sweet-btn-xl" 
+                                                    target=_blank 
+                                                    href="https://stackoverflow.com/users/3989221/superveetz"
+                                        
+                                                    sweet-btn-glyph-classes='fa fa-fw fa-stack-overflow fa-inverse'
+                                                    sweet-btn-glyph-size='md'
+                                                    sweet-btn-glyph-mouse-enter='bounceIn'
+                                                    sweet-btn-glyph-mouse-enter-animation-delay='0'
+                                                    sweet-btn-glyph-mouse-enter-animation-duration='1200'
+                                                    sweet-btn-glyph-mouse-leave='bounceOut'
+                                                    sweet-btn-glyph-mouse-leave-animation-delay='0'
+                                                    sweet-btn-glyph-mouse-leave-animation-duration='1200'
+                                                    
+                                                    sweet-btn-shape-1='square'
+                                                    sweet-btn-shape-1-size='xl'
+                                                    sweet-btn-shape-1-background='rgba(0, 46, 102, 1)'
+                                                    sweet-btn-shape-1-mouse-enter='rotateIn'
+                                                    sweet-btn-shape-1-mouse-enter-animation-delay='0'
+                                                    sweet-btn-shape-1-mouse-enter-animation-duration='1200'
+                                                    sweet-btn-shape-1-mouse-leave='rotateOut'
+                                                    sweet-btn-shape-1-mouse-leave-animation-delay='800'
+                                                    sweet-btn-shape-1-mouse-leave-animation-duration='400'
+                                        
+                                                    sweet-btn-shape-2='circle'
+                                                    sweet-btn-shape-2-size='xl'
+                                                    sweet-btn-shape-2-background='GoldenRod'
+                                                    sweet-btn-shape-2-mouse-enter='rotateIn'
+                                                    sweet-btn-shape-2-mouse-enter-animation-delay='0'
+                                                    sweet-btn-shape-2-mouse-enter-animation-duration='1040'
+                                                    sweet-btn-shape-2-mouse-leave='rotateOut'
+                                                    sweet-btn-shape-2-mouse-leave-animation-delay='640'
+                                                    sweet-btn-shape-2-mouse-leave-animation-duration='560'
+                                        
+                                                    sweet-btn-shape-3='square'
+                                                    sweet-btn-shape-3-size='lg'
+                                                    sweet-btn-shape-3-background='dodgerblue'
+                                                    sweet-btn-shape-3-mouse-enter='rotateIn'
+                                                    sweet-btn-shape-3-mouse-enter-animation-delay='0'
+                                                    sweet-btn-shape-3-mouse-enter-animation-duration='880'
+                                                    sweet-btn-shape-3-mouse-leave='rotateOut'
+                                                    sweet-btn-shape-3-mouse-leave-animation-delay='480'
+                                                    sweet-btn-shape-3-mouse-leave-animation-duration='720'
+                                        
+                                                    sweet-btn-shape-4='hexagon'
+                                                    sweet-btn-shape-4-size='md'
+                                                    sweet-btn-shape-4-background='gold'
+                                                    sweet-btn-shape-4-mouse-enter='rotateIn'
+                                                    sweet-btn-shape-4-mouse-enter-animation-delay='0'
+                                                    sweet-btn-shape-4-mouse-enter-animation-duration='720'
+                                                    sweet-btn-shape-4-mouse-leave='rotateOut'
+                                                    sweet-btn-shape-4-mouse-leave-animation-delay='320'
+                                                    sweet-btn-shape-4-mouse-leave-animation-duration='880'
+                                        
+                                                    sweet-btn-shape-5='circle'
+                                                    sweet-btn-shape-5-size='sm'
+                                                    sweet-btn-shape-5-background='tomato'
+                                                    sweet-btn-shape-5-mouse-enter='bounceIn'
+                                                    sweet-btn-shape-5-mouse-enter-animation-delay='0'
+                                                    sweet-btn-shape-5-mouse-enter-animation-duration='800'
+                                                    sweet-btn-shape-5-mouse-leave='bounceOut'
+                                                    sweet-btn-shape-5-mouse-leave-animation-delay='160'
+                                                    sweet-btn-shape-5-mouse-leave-animation-duration='1040'>
+                                                </a>
+
+                                                <a class="sweet-btn sweet-btn-xl" 
+                                                    target=_blank 
+                                                    href="https://www.linkedin.com/in/alex-di-vito-433334121"
+
+                                                    sweet-btn-glyph-classes='fa fa-fw fa-linkedin fa-inverse'
+                                                    sweet-btn-glyph-size='md'
+                                                    sweet-btn-glyph-mouse-enter='bounceIn'
+                                                    sweet-btn-glyph-mouse-enter-animation-delay='0'
+                                                    sweet-btn-glyph-mouse-enter-animation-duration='1200'
+                                                    sweet-btn-glyph-mouse-leave='bounceOut'
+                                                    sweet-btn-glyph-mouse-leave-animation-delay='0'
+                                                    sweet-btn-glyph-mouse-leave-animation-duration='1200'
+                                                    
+                                                    sweet-btn-shape-1='square'
+                                                    sweet-btn-shape-1-size='xl'
+                                                    sweet-btn-shape-1-background='rgba(0, 46, 102, 1)'
+                                                    sweet-btn-shape-1-mouse-enter='rotateInDownLeft'
+                                                    sweet-btn-shape-1-mouse-enter-animation-delay='0'
+                                                    sweet-btn-shape-1-mouse-enter-animation-duration='1200'
+                                                    sweet-btn-shape-1-mouse-leave='rotateOutUpLeft'
+                                                    sweet-btn-shape-1-mouse-leave-animation-delay='800'
+                                                    sweet-btn-shape-1-mouse-leave-animation-duration='400'
+
+                                                    sweet-btn-shape-2='hexagon'
+                                                    sweet-btn-shape-2-size='xl'
+                                                    sweet-btn-shape-2-background='GoldenRod'
+                                                    sweet-btn-shape-2-mouse-enter='rotateInDownRight'
+                                                    sweet-btn-shape-2-mouse-enter-animation-delay='0'
+                                                    sweet-btn-shape-2-mouse-enter-animation-duration='1040'
+                                                    sweet-btn-shape-2-mouse-leave='rotateOutUpRight'
+                                                    sweet-btn-shape-2-mouse-leave-animation-delay='640'
+                                                    sweet-btn-shape-2-mouse-leave-animation-duration='560'
+
+                                                    sweet-btn-shape-3='square'
+                                                    sweet-btn-shape-3-size='lg'
+                                                    sweet-btn-shape-3-background='dodgerblue'
+                                                    sweet-btn-shape-3-mouse-enter='rotateInUpLeft'
+                                                    sweet-btn-shape-3-mouse-enter-animation-delay='0'
+                                                    sweet-btn-shape-3-mouse-enter-animation-duration='880'
+                                                    sweet-btn-shape-3-mouse-leave='rotateOutDownLeft'
+                                                    sweet-btn-shape-3-mouse-leave-animation-delay='480'
+                                                    sweet-btn-shape-3-mouse-leave-animation-duration='720'
+
+                                                    sweet-btn-shape-4='hexagon'
+                                                    sweet-btn-shape-4-size='md'
+                                                    sweet-btn-shape-4-background='gold'
+                                                    sweet-btn-shape-4-mouse-enter='rotateInUpRight'
+                                                    sweet-btn-shape-4-mouse-enter-animation-delay='0'
+                                                    sweet-btn-shape-4-mouse-enter-animation-duration='720'
+                                                    sweet-btn-shape-4-mouse-leave='rotateOutDownRight'
+                                                    sweet-btn-shape-4-mouse-leave-animation-delay='320'
+                                                    sweet-btn-shape-4-mouse-leave-animation-duration='880'
+
+                                                    sweet-btn-shape-5='circle'
+                                                    sweet-btn-shape-5-size='sm'
+                                                    sweet-btn-shape-5-background='tomato'
+                                                    sweet-btn-shape-5-mouse-enter='bounceIn'
+                                                    sweet-btn-shape-5-mouse-enter-animation-delay='0'
+                                                    sweet-btn-shape-5-mouse-enter-animation-duration='800'
+                                                    sweet-btn-shape-5-mouse-leave='bounceOut'
+                                                    sweet-btn-shape-5-mouse-leave-animation-delay='160'
+                                                    sweet-btn-shape-5-mouse-leave-animation-duration='1040'>
+                                                </a>
+
+                                                <a class="sweet-btn sweet-btn-xl" 
+                                                    target=_blank 
+                                                    href="https://github.com/superveetz"
+
+                                                    sweet-btn-glyph-classes='fa fa-fw fa-github fa-inverse'
+                                                    sweet-btn-glyph-size='md'
+                                                    sweet-btn-glyph-mouse-enter='bounceIn'
+                                                    sweet-btn-glyph-mouse-enter-animation-delay='0'
+                                                    sweet-btn-glyph-mouse-enter-animation-duration='1200'
+                                                    sweet-btn-glyph-mouse-leave='bounceOut'
+                                                    sweet-btn-glyph-mouse-leave-animation-delay='0'
+                                                    sweet-btn-glyph-mouse-leave-animation-duration='1200'
+                                                    
+                                                    sweet-btn-shape-1='square'
+                                                    sweet-btn-shape-1-size='xl'
+                                                    sweet-btn-shape-1-background='rgba(0, 46, 102, 1)'
+                                                    sweet-btn-shape-1-mouse-enter='fadeInDown'
+                                                    sweet-btn-shape-1-mouse-enter-animation-delay='0'
+                                                    sweet-btn-shape-1-mouse-enter-animation-duration='1200'
+                                                    sweet-btn-shape-1-mouse-leave='fadeOutUp'
+                                                    sweet-btn-shape-1-mouse-leave-animation-delay='800'
+                                                    sweet-btn-shape-1-mouse-leave-animation-duration='400'
+
+                                                    sweet-btn-shape-2='hexagon'
+                                                    sweet-btn-shape-2-size='xl'
+                                                    sweet-btn-shape-2-background='GoldenRod'
+                                                    sweet-btn-shape-2-mouse-enter='fadeInLeft'
+                                                    sweet-btn-shape-2-mouse-enter-animation-delay='0'
+                                                    sweet-btn-shape-2-mouse-enter-animation-duration='1040'
+                                                    sweet-btn-shape-2-mouse-leave='fadeOutRight'
+                                                    sweet-btn-shape-2-mouse-leave-animation-delay='640'
+                                                    sweet-btn-shape-2-mouse-leave-animation-duration='560'
+
+                                                    sweet-btn-shape-3='hexagon'
+                                                    sweet-btn-shape-3-size='lg'
+                                                    sweet-btn-shape-3-background='dodgerblue'
+                                                    sweet-btn-shape-3-mouse-enter='fadeInRight'
+                                                    sweet-btn-shape-3-mouse-enter-animation-delay='0'
+                                                    sweet-btn-shape-3-mouse-enter-animation-duration='880'
+                                                    sweet-btn-shape-3-mouse-leave='fadeOutLeft'
+                                                    sweet-btn-shape-3-mouse-leave-animation-delay='480'
+                                                    sweet-btn-shape-3-mouse-leave-animation-duration='720'
+
+                                                    sweet-btn-shape-4='hexagon'
+                                                    sweet-btn-shape-4-size='md'
+                                                    sweet-btn-shape-4-background='gold'
+                                                    sweet-btn-shape-4-mouse-enter='fadeInUp'
+                                                    sweet-btn-shape-4-mouse-enter-animation-delay='0'
+                                                    sweet-btn-shape-4-mouse-enter-animation-duration='720'
+                                                    sweet-btn-shape-4-mouse-leave='fadeOutDown'
+                                                    sweet-btn-shape-4-mouse-leave-animation-delay='320'
+                                                    sweet-btn-shape-4-mouse-leave-animation-duration='880'
+
+                                                    sweet-btn-shape-5='circle'
+                                                    sweet-btn-shape-5-size='sm'
+                                                    sweet-btn-shape-5-background='tomato'
+                                                    sweet-btn-shape-5-mouse-enter='bounceIn'
+                                                    sweet-btn-shape-5-mouse-enter-animation-delay='0'
+                                                    sweet-btn-shape-5-mouse-enter-animation-duration='800'
+                                                    sweet-btn-shape-5-mouse-leave='bounceOut'
+                                                    sweet-btn-shape-5-mouse-leave-animation-delay='160'
+                                                    sweet-btn-shape-5-mouse-leave-animation-duration='1040'>
+                                                </a>
+                                            </div>
+                                            <p class='lead'>
+                                                <b>Code:</b>
+                                            </p>
+                                            <p class='lead'>
+                                                <code>&lt;a class="sweet-btn sweet-btn-xl"</code><br>
+                                                    &nbsp;&nbsp;<code>target=_blank </code><br>
+                                                    &nbsp;&nbsp;<code>href="https://github.com/superveetz"</code><br>
+                                                    <br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-glyph-classes='fa fa-fw fa-github fa-inverse'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-glyph-size='md'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-glyph-mouse-enter='bounceIn'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-glyph-mouse-enter-animation-delay='0'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-glyph-mouse-enter-animation-duration='1200'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-glyph-mouse-leave='bounceOut'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-glyph-mouse-leave-animation-delay='0'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-glyph-mouse-leave-animation-duration='1200'</code><br>
+                                                   <br> 
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-1='square'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-1-size='xl'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-1-background='rgba(0, 46, 102, 1)'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-1-mouse-enter='fadeInDown'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-1-mouse-enter-animation-delay='0'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-1-mouse-enter-animation-duration='1200'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-1-mouse-leave='fadeOutUp'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-1-mouse-leave-animation-delay='800'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-1-mouse-leave-animation-duration='400'</code><br>
+                                                    <br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-2='hexagon'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-2-size='xl'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-2-background='GoldenRod'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-2-mouse-enter='fadeInLeft'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-2-mouse-enter-animation-delay='0'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-2-mouse-enter-animation-duration='1040'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-2-mouse-leave='fadeOutRight'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-2-mouse-leave-animation-delay='640'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-2-mouse-leave-animation-duration='560'</code><br>
+                                                    <br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-3='hexagon'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-3-size='lg'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-3-background='dodgerblue'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-3-mouse-enter='fadeInRight'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-3-mouse-enter-animation-delay='0'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-3-mouse-enter-animation-duration='880'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-3-mouse-leave='fadeOutLeft'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-3-mouse-leave-animation-delay='480'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-3-mouse-leave-animation-duration='720'</code><br>
+                                                    <br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-4='hexagon'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-4-size='md'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-4-background='gold'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-4-mouse-enter='fadeInUp'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-4-mouse-enter-animation-delay='0'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-4-mouse-enter-animation-duration='720'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-4-mouse-leave='fadeOutDown'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-4-mouse-leave-animation-delay='320'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-4-mouse-leave-animation-duration='880'</code><br>
+                                                    <br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-5='circle'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-5-size='sm'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-5-background='tomato'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-5-mouse-enter='bounceIn'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-5-mouse-enter-animation-delay='0'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-5-mouse-enter-animation-duration='800'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-5-mouse-leave='bounceOut'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-5-mouse-leave-animation-delay='160'</code><br>
+                                                    &nbsp;&nbsp;<code>sweet-btn-shape-5-mouse-leave-animation-duration='1040'&gt;</code><br>
+                                                    <br>
+                                                <code>&lt;/a&gt;</code>
+                                            </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div style='height: 1000px; width: 100%;'></div>
 
-            <a 
-                href="#"
-                class='sweet-btn sweet-btn-lg'
-                sweet-btn-glyph-classes='fa fa-fw fa-facebook-square'
-                sweet-btn-glyph-size='xl'
-                sweet-btn-shape-1='hexagon'
-                sweet-btn-shape-1-size='lg'
-                sweet-btn-shape-1-background='tomato'
-                sweet-btn-shape-1-click='rubberBand'
-                sweet-btn-shape-1-mouse-enter='rotateIn'
-                sweet-btn-shape-1-mouse-leave='rotateOut'>
-            </a>
+                <!-- <div style='height: 1000px; width: 100%;'></div>
 
-            <div style='height: 1000px; width: 100%;'></div>
+                <a 
+                    href="#"
+                    class='sweet-btn sweet-btn-lg'
+                    sweet-btn-glyph-classes='fa fa-fw fa-facebook-square'
+                    sweet-btn-glyph-size='xl'
+                    sweet-btn-shape-1='hexagon'
+                    sweet-btn-shape-1-size='lg'
+                    sweet-btn-shape-1-background='tomato'
+                    sweet-btn-shape-1-click='rubberBand'
+                    sweet-btn-shape-1-mouse-enter='rotateIn'
+                    sweet-btn-shape-1-mouse-leave='rotateOut'>
+                </a>
 
-            <div style='height: 1000px; width: 100%;'></div>
+                <div style='height: 1000px; width: 100%;'></div>
 
-            <div style='height: 1000px; width: 100%;'></div>
-            <div style='height: 1000px; width: 100%;'></div>
+                <div style='height: 1000px; width: 100%;'></div>
 
-            <div style='height: 1000px; width: 100%;'></div>
-        </div>
+                <div style='height: 1000px; width: 100%;'></div>
+                <div style='height: 1000px; width: 100%;'></div>
+
+                <div style='height: 1000px; width: 100%;'></div> -->
 
         <script>
             $(function () {
@@ -294,3 +1203,4 @@
         </script>
     </body>
 </html>
+

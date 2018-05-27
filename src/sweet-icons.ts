@@ -659,7 +659,7 @@ declare var jQuery: any;
                     const fontSize = (glyphScaleY/2);
                     const childWidth = this['childWidth'];
                     const glyphWidth = this['shapeScale'][glyphSize]['width'];
-                    const extraPadding = 2;
+                    const extraPadding = -2;
                     iconGlyph.style.marginTop = `-${fontSize/2}px`;
                     iconGlyph.style.marginLeft = `-${fontSize/2 + fontSize/8 + childWidth/2 +extraPadding}px`;
                 } else {
@@ -1305,10 +1305,11 @@ declare var jQuery: any;
                 this.shapeScale[key]['height']   += (childHeight / 2);
             }
 
+            
             if (this['glyph-classes']) {
                 const glyphSize     = this['glyph-size'].length ? this['glyph-size'] : 'xs';
                 const elemWidth     = this.shapeScale[glyphSize]['width'];
-                const extraPadding  = 2;
+                const extraPadding  = -2;    
                 // adjust position
                 $(btnChild).css({
                     position: 'absolute',
@@ -1318,14 +1319,17 @@ declare var jQuery: any;
                     marginLeft: ((childWidth / 2 - (elemWidth/8) - extraPadding) * -1)
                 });
             } else {
+                const extraPadding  = 0;
                 // adjust position
                 $(btnChild).css({
                     position: 'absolute',
                     top: "50%",
                     left: "50%",
                     marginTop: (childHeight / 2.25 * -1),
-                    marginLeft: (childWidth / 2 * -1)
+                    marginLeft: (((childWidth / 3) + (btnChild.offsetWidth/6) - extraPadding) * -1)
                 });
+
+                console.log('btnchild.width', btnChild.offsetWidth / 8);
             }
 
             return btnChild;
