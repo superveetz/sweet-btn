@@ -29,39 +29,61 @@ A lightweight jQuery button plugin. Designed for developers, it's simple to use 
 
 `npm run start`
 
-Add this just before your closing `head` tag:
-
-```html
-<link rel="styesheet" href="/your/css/folder/popup.css">
-```
-
-Then, place `/assets/js/jquery.popup.min.js` in `/your/js/folder/`.
-
-Add this just before your closing `body` tag, after you've included jQuery:
-
-```html
-<script src="/your/js/folder/jquery.popup.min.js"></script>
-```
-
 ---
 
-## Usage
+** Installation
+
+This plugin relies on a couple packages which can be easily installed from npm:
+
+`npm install async font-awesome jquery animate.css --save`
+
+Install the Sweet-Button.js package and include it in your project (note: dependencies installed above should be loaded into your project before the `sweet-button.js` file:
+
+`git clone https://github.com/superveetz/sweet-btn.git`
+
+```html
+<link rel='stylesheet' href='/font-awesome/css/font-awesome.min.css'>
+<link rel='stylesheet' href='/animate.css/animate.min.css'>
+<script src="/jquery/dist/jquery.minjs"></script>
+<script src="/async/dist/async.minjs"></script>
+<script src="/vendor/js/folder/sweet-button/release/sweet-button.js"></script>
+```
 
 Set up your html:
 
 ```html
-<a href="http://placehold.it/350x175.png" class="popup">Popup link</a>
+<a 
+  href='#'
+  class='sweet-btn sweet-btn-xl'
+
+  sweet-btn-glyph-classes='fa fa-fw fa-facebook-square'
+  sweet-btn-glyph-size='sm'
+  sweet-btn-glyph-color='skyblue'
+
+  sweet-btn-shape-1='hexagon'
+  sweet-btn-shape-1-background='blue'
+  sweet-btn-shape-1-size='md'
+
+  sweet-btn-shape-2='square'
+  sweet-btn-shape-2-background='red'
+  sweet-btn-shape-2-size='sm'
+
+  sweet-btn-shape-3='circle'
+  sweet-btn-shape-3-background='gold'
+  sweet-btn-shape-3-size='xs'>
+</a>
 ```
 
 Call the plugin:
 
 ```javascript
-var options = {};
-$('a.popup').popup(options);
+$(document).ready(function() {
+  $('.sweet-btn').sweetButton();
+})();
 ```
 
 ---
 
 ## Documentation
 
-For full documentation, have a look at [http://docs.toddish.co.uk/popup](http://docs.toddish.co.uk/popup).
+Follow the `Try It Out` guide to view the full documentation.
